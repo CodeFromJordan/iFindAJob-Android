@@ -1,28 +1,25 @@
 // Author: Jordan Hancock
-// Name: MainActivity.java
+// Name: SavedJobsActivity.java
 // Last Modified: 7/02/2014
-// Purpose: Activity which is used for main activity page.
+// Purpose: Activity which is used for saved jobs activity page.
 
 package uk.ac.bcu;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends Activity
-{
+public class SavedJobsActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.saved_jobs);
         
-        super.setTitle("iFindAJob");
-        this.setTitle("Home");
+        this.setTitle("Saved Jobs");
     }
     
     // When Menu button clicked
@@ -35,27 +32,18 @@ public class MainActivity extends Activity
     // When item in menu selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent activityToSwitchTo = new Intent();
         switch(item.getItemId())
         {
             case R.id.itemHomeActivity:
-                // Set as Main activity
-                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(activityToSwitchTo);
+                // Open Home activity
                 return true;
             case R.id.itemSearchActivity:
-                // Set as Search activity
-                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
-                startActivity(activityToSwitchTo);
+                // Open Search activity
                 return true;
             case R.id.itemSavedJobsActivity:
-                // Set as Saved Jobs activity
-                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
-                startActivity(activityToSwitchTo);
+                // Open Saved Jobs activity
                 return true; 
         }
-        
-        
         return false;
     }
     

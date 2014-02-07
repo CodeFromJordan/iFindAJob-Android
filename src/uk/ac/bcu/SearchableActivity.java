@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Author: Jordan Hancock
+// Name: SearchableActivity.java
+// Last Modified: 7/02/2014
+// Purpose: Activity which is used for search bar.
 
 package uk.ac.bcu;
 

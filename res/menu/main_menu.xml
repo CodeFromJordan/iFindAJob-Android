@@ -6,7 +6,13 @@ and open the template in the editor.
 -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/itemSearch"
-          android:title="Search Films" 
+    <item android:id="@+id/itemHomeActivity"
+          android:title="Home" 
+          android:icon="@*android:drawable/ic_menu_home"/>
+    <item android:id="@+id/itemSearchActivity"
+          android:title="Search For Jobs" 
           android:icon="@android:drawable/ic_menu_search"/>
+    <item android:id="@+id/itemSavedJobsActivity"
+          android:title="Saved Jobs" 
+          android:icon="@android:drawable/ic_menu_agenda"/>
 </menu>
