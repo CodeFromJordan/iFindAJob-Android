@@ -6,8 +6,28 @@
     >
 <TextView 
     android:layout_width="fill_parent" 
-    android:layout_height="fill_parent" 
-    android:text="Welcome to iFindAJob"
+    android:layout_height="wrap_content"
+    android:textColor="#926239"
+    android:textSize="40sp"
+    android:gravity="center_horizontal"
+    android:text="@string/app_label"
+    />
+
+<TextView 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:textColor="#FFFFFF"
+    android:textSize="15sp"
+    android:gravity="left"
+    android:text="@string/app_intro1"
+    />
+<TextView 
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content"
+    android:textColor="#FFFFFF"
+    android:textSize="15sp"
+    android:gravity="left"
+    android:text="@string/app_intro2"
     />
 </LinearLayout>
 

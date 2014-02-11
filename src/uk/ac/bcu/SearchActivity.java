@@ -6,6 +6,7 @@
 package uk.ac.bcu;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,11 +28,13 @@ public class SearchActivity extends ListActivity {
         this.setTitle("Search");
         
         setListAdapter(new ArrayAdapter<String>(this,
-        R.layout.job_list_cell,
+        R.layout.location_list_cell,
         R.id.text, CELLS));
+        
+        onSearchRequested();
     }
     
-        // When Menu button clicked
+    // When Menu button clicked
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -41,16 +44,23 @@ public class SearchActivity extends ListActivity {
     // When item in menu selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent activityToSwitchTo = new Intent();
         switch(item.getItemId())
         {
             case R.id.itemHomeActivity:
-                // Open Home activity
+                // Set as Main activity
+                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSearchActivity:
-                // Open Search activity
-                return true;
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;         
             case R.id.itemSavedJobsActivity:
-                // Open Saved Jobs activity
+                // Set as Saved Jobs activity
+                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+                startActivity(activityToSwitchTo);
                 return true; 
         }
         return false;
@@ -74,8 +84,5 @@ public class SearchActivity extends ListActivity {
     // When search button pressed, open search bar
     
     static final String[] CELLS = 
-            new String[] { "Job 0", "Job 1", "Job 2",
-                            "Job 3", "Job 4", "Job 5",
-                            "Job 6", "Job 7", "Job 8",
-                            "Job 9", "Job 10"};
+            new String[] { "No jobs here yet.." };
 }

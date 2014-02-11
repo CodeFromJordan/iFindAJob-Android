@@ -6,6 +6,7 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -32,17 +33,24 @@ public class SavedJobsActivity extends Activity {
     // When item in menu selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent activityToSwitchTo = new Intent();
         switch(item.getItemId())
         {
             case R.id.itemHomeActivity:
-                // Open Home activity
+                // Set as Main activity
+                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSearchActivity:
-                // Open Search activity
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
+                startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSavedJobsActivity:
-                // Open Saved Jobs activity
-                return true; 
+                // Set as Saved Jobs activity
+                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;
         }
         return false;
     }

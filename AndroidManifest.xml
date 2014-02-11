@@ -3,21 +3,16 @@
       package="uk.ac.bcu"
       android:versionCode="1"
       android:versionName="1.0">
+    
+    <uses-permission android:name="android.permission.INTERNET" />
     <application android:label="@string/app_name"
                  android:allowBackup="true">
         
-        <!-- Search bar activity, this performs the searches -->
-        <activity android:name="SearchableActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
-        </activity>
-        
+       
         <!-- Main activity -->
         <activity android:name="MainActivity"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,7 +20,8 @@
         </activity>
         
         <!-- Search activity -->
-        <activity android:name="SearchActivity">
+        <activity android:name="SearchActivity"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -36,8 +32,18 @@
                        android:value="SearchableActivity" />
         </activity>
         
+        <!-- Search bar activity, this performs the searches -->
+        <activity android:name=".SearchableActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable"/>
+        </activity>
+        
         <!-- Saved Jobs activity -->
-        <activity android:name="SavedJobsActivity">
+        <activity android:name=".SavedJobsActivity"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SAVEDJOBS" />
                 <category android:name="android.intent.category.LAUNCHER" />
