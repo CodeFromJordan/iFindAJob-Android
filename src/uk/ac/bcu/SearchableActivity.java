@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
 // Name: SearchableActivity.java
 // Last Modified: 11/02/2014
-// Purpose: Activity which is used for controlling search bar.
+// Purpose: Activity which is used for controlling search bar for Location search.
 
 package uk.ac.bcu;
 
@@ -53,9 +53,11 @@ public class SearchableActivity extends ListActivity implements IServiceListener
         if(!service.hasError()) {
             LocationSearchService locationService = (LocationSearchService)service;
             
-            String[] result = new String[locationService.getResults().length()];
+            final int numberOfResults = locationService.getResults().length(); // Get number of results from search
             
-            for(int i = 0; i < locationService.getResults().length(); i++) {
+            String[] result = new String[numberOfResults];
+            
+            for(int i = 0; i < numberOfResults; i++) {
                 try {
                     result[i] = locationService.getResults().getJSONObject(i).getString("city");
                 } catch (JSONException ex) {
@@ -65,7 +67,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             
             setListAdapter(new ArrayAdapter<String>(this, 
             R.layout.list_cell,
-            R.id.text, 
+            R.id.text,
             result));
         } else {
             String[] result = new String[] { "No results.." };

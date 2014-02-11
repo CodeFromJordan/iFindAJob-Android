@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
 // Name: JobSearchActivity.java
 // Last Modified: 11/02/2014
-// Purpose: Activity which is used for individual job search activity page.
+// Purpose: Activity which is used for individual job search activity page (no search bar therefore no searchable.)
 
 package uk.ac.bcu;
 

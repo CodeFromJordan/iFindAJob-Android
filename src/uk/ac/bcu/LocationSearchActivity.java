@@ -57,9 +57,7 @@ public class LocationSearchActivity extends ListActivity {
                 return true;
             case R.id.itemSearchActivity:
                 // Set as Search activity
-                //activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
-                //startActivity(activityToSwitchTo);
-                onSearchRequested();
+                onSearchRequested(); // Start search
                 return true;         
             case R.id.itemSavedJobsActivity:
                 // Set as Saved Jobs activity
