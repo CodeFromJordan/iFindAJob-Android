@@ -21,6 +21,7 @@ import uk.ac.bcu.services.LocationSearchService;
  */
 public class SearchableActivity extends ListActivity implements IServiceListener {
     private Thread thread;
+    private Location[] result; // Store results and indexes
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,17 +56,19 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             
             final int numberOfResults = locationService.getResults().length(); // Get number of results from search
             
-            String[] result = new String[numberOfResults];
+            //String[] result = new String[numberOfResults];
+            result = new Location[numberOfResults];
             
             for(int i = 0; i < numberOfResults; i++) {
                 try {
-                    result[i] = locationService.getResults().getJSONObject(i).getString("city");
+                    result[i] = new Location(locationService.getResults().getJSONObject(i).getString("id"),
+                            locationService.getResults().getJSONObject(i).getString("city"));
                 } catch (JSONException ex) {
-                    result[i] = "Error";
+                    result[i] = new Location("Error", "There has been an error..");
                 }
             }
             
-            setListAdapter(new ArrayAdapter<String>(this, 
+            setListAdapter(new ArrayAdapter<Location>(this, 
             R.layout.list_cell,
             R.id.text,
             result));
