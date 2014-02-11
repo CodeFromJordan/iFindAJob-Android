@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Author: Jordan Hancock
+// Name: LocationSearchService.java
+// Last Modified: 11/02/2014
+// Purpose: Manages first part of search where locations are pulled from API.
 
 package uk.ac.bcu.services;
 
@@ -52,8 +51,7 @@ public class LocationSearchService extends AbstractService {
            
            if(results.length() == 0) {
                error = true;
-           }
-               
+           }    
        } catch (Exception e) {
            results = null;
            error = true;

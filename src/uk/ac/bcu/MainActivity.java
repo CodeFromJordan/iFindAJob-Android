@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
 // Name: MainActivity.java
 // Last Modified: 11/02/2014
-// Purpose: Activity which is used for main activity page.
+// Purpose: Activity which is used for main (home) activity page.
 
 package uk.ac.bcu;
 
@@ -46,7 +46,7 @@ public class MainActivity extends Activity
                 return true;
             case R.id.itemSearchActivity:
                 // Set as Search activity
-                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSavedJobsActivity:

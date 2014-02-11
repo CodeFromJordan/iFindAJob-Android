@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
         
-        <!-- Search activity -->
-        <activity android:name="SearchActivity"
+        <!-- Location search activity -->
+        <activity android:name="LocationSearchActivity"
                   android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -33,6 +33,11 @@
             <!-- Set this search to use the Search activity -->
             <meta-data android:name="android.app.default_searchable"
                        android:value=".SearchableActivity" />
+        </activity>
+        
+        <!-- Job search activity -->
+        <activity android:name="JobSearchActivity"
+                  android:launchMode="singleTop">
         </activity>
         
         <!-- Search bar activity, this performs the searches -->

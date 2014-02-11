@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
 // Name: SearchableActivity.java
 // Last Modified: 11/02/2014
-// Purpose: Activity which is used for search bar.
+// Purpose: Activity which is used for controlling search bar.
 
 package uk.ac.bcu;
 
@@ -33,8 +33,6 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             String query = intent.getStringExtra(SearchManager.QUERY);
             doSearch(query);
         }
-        
-       onSearchRequested();
     }
     
     public void doSearch(String query) {

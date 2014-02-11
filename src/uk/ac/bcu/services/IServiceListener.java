@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Author: Jordan Hancock
+// Name: IServiceListener.java
+// Last Modified: 11/02/2014
+// Purpose: Interface for service listener
 
 package uk.ac.bcu.services;
 

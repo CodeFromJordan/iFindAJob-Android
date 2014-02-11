@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
-// Name: SearchActivity.java
+// Name: LocationSearchActivity.java
 // Last Modified: 11/02/2014
-// Purpose: Activity which is used for search activity page.
+// Purpose: Activity which is used for location search activity page.
 
 package uk.ac.bcu;
 
@@ -11,21 +11,18 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 
 /**
  *
  * @author jordan
  */
-public class SearchActivity extends ListActivity {
-    private Button btnSearch;
+public class LocationSearchActivity extends ListActivity {
+    // Declare objects here (as private)
     
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         // Set up super
         super.onCreate(savedInstanceState);
         
@@ -86,16 +83,20 @@ public class SearchActivity extends ListActivity {
     }
     
     private void setupControls() {
-        // Search button
-        btnSearch = (Button)findViewById(R.id.search_button);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        // NEED TO MAKE LIST ITEMS CLICKABLE
+        // They then take pass location ID to JobSearchActivity
+        // Which then uses them to perform search and populate its results
+        // Which then when clicked take you to job detail page
+        
+        // Template code for clickable control
+        /*
+        clickableObject = (Button)findViewById(R.id.object_id);
+        clickableObject.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                onSearchRequested();
+                // Do task here
             }
         });
-        
-        // Next control
-        // Code goes here
+        */
     }
     
     static final String[] CELLS = 

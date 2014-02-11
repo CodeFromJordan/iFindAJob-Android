@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Author: Jordan Hancock
+// Name: AbstractService.java
+// Last Modified: 11/02/2014
+// Purpose: Abstract class for service, allowing children to provide own implementations.
 
 package uk.ac.bcu.services;
 

@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -14,10 +9,4 @@ and open the template in the editor.
     android:layout_height="fill_parent" 
     android:id="@android:id/list"
     />
-<Button
-    android:id="@+id/search_button"
-    android:layout_width="fill_parent"
-    android:layout_height="25sp"
-    android:text="@string/search_button_text"
-/>
 </LinearLayout>

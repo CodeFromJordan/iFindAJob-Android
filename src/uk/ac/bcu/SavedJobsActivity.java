@@ -44,7 +44,7 @@ public class SavedJobsActivity extends ListActivity {
                 return true;
             case R.id.itemSearchActivity:
                 // Set as Search activity
-                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSavedJobsActivity:
