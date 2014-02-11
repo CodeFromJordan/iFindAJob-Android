@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SearchActivity.java
-// Last Modified: 7/02/2014
+// Last Modified: 11/02/2014
 // Purpose: Activity which is used for search activity page.
 
 package uk.ac.bcu;
@@ -11,27 +11,33 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 
 /**
  *
  * @author jordan
  */
 public class SearchActivity extends ListActivity {
+    private Button btnSearch;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        // Set up super
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
         
-        this.setTitle("Search");
-        
+        // Populate list
         setListAdapter(new ArrayAdapter<String>(this,
-        R.layout.location_list_cell,
+        R.layout.list_cell,
         R.id.text, CELLS));
         
-        onSearchRequested();
+        // Set up interface
+        setContentView(R.layout.search); // Layout
+        this.setTitle("Search"); // Title
+        setupControls(); // Controls
     }
     
     // When Menu button clicked
@@ -48,14 +54,15 @@ public class SearchActivity extends ListActivity {
         switch(item.getItemId())
         {
             case R.id.itemHomeActivity:
-                // Set as Main activity
+                // Set as Main activity Locations
                 activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
             case R.id.itemSearchActivity:
                 // Set as Search activity
-                activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
-                startActivity(activityToSwitchTo);
+                //activityToSwitchTo = new Intent(getBaseContext(), SearchActivity.class);
+                //startActivity(activityToSwitchTo);
+                onSearchRequested();
                 return true;         
             case R.id.itemSavedJobsActivity:
                 // Set as Saved Jobs activity
@@ -71,18 +78,26 @@ public class SearchActivity extends ListActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         switch(keyCode)
         {
-            case KeyEvent.KEYCODE_HOME:
-                // Display home activity
-                return true;
             case KeyEvent.KEYCODE_SEARCH:
-                // Display search activity
+                onSearchRequested();
                 return true; 
         }
         return false;
     }
     
-    // When search button pressed, open search bar
+    private void setupControls() {
+        // Search button
+        btnSearch = (Button)findViewById(R.id.search_button);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onSearchRequested();
+            }
+        });
+        
+        // Next control
+        // Code goes here
+    }
     
     static final String[] CELLS = 
-            new String[] { "No jobs here yet.." };
+            new String[] { "No saved locations to display.." };
 }

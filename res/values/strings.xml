@@ -3,7 +3,6 @@
     <!-- Shared -->
     <string name="app_name">iFindAJob</string>
     <string name="app_label">iFindAJob</string>
-    <string name="search_hint">Enter job keywords..</string>
     
     <!-- Homepage -->
     <string name="app_intro1">Hello, and welcome to the iFindAJob Android application.
@@ -11,4 +10,8 @@
     begin searching for I.T. jobs around the globe.</string>
     <string name="app_intro2">If the Android app has helped you, please use
     the \'Share App\' button at the top right to spread the word!</string>
+    
+    <!-- Search page -->
+    <string name="search_button_text">Look for Jobs</string>
+    <string name="search_hint">Enter job keywords..</string>
 </resources>

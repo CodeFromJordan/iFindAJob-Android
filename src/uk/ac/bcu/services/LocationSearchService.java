@@ -47,12 +47,13 @@ public class LocationSearchService extends AbstractService {
            String result = EntityUtils.toString(entity, "UTF8");
            
            JSONObject json = new JSONObject(result);
+           json = json.getJSONObject("locations");
+           results = json.getJSONArray("location");
            
-           if(json.getInt("locations.location.count") > 0) {
-               results = json.getJSONArray("locations.location");
-           } else {
+           if(results.length() == 0) {
                error = true;
            }
+               
        } catch (Exception e) {
            results = null;
            error = true;

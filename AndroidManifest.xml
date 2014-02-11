@@ -4,11 +4,14 @@
       android:versionCode="1"
       android:versionName="1.0">
     
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
+    
+    <!-- BEGIN APP -->
     <application android:label="@string/app_name"
-                 android:allowBackup="true">
+                 android:allowBackup="true"
+                 android:icon="@drawable/icon">
         
-       
         <!-- Main activity -->
         <activity android:name="MainActivity"
                   android:label="@string/app_name"
@@ -29,7 +32,7 @@
             
             <!-- Set this search to use the Search activity -->
             <meta-data android:name="android.app.default_searchable"
-                       android:value="SearchableActivity" />
+                       android:value=".SearchableActivity" />
         </activity>
         
         <!-- Search bar activity, this performs the searches -->
@@ -51,4 +54,5 @@
         </activity>
         
     </application>
+    <!-- END APP -->
 </manifest> 

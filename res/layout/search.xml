@@ -14,4 +14,10 @@ and open the template in the editor.
     android:layout_height="fill_parent" 
     android:id="@android:id/list"
     />
+<Button
+    android:id="@+id/search_button"
+    android:layout_width="fill_parent"
+    android:layout_height="25sp"
+    android:text="@string/search_button_text"
+/>
 </LinearLayout>

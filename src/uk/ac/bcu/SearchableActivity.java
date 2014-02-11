@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SearchableActivity.java
-// Last Modified: 7/02/2014
+// Last Modified: 11/02/2014
 // Purpose: Activity which is used for search bar.
 
 package uk.ac.bcu;
@@ -46,7 +46,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
         thread.start();
         
         setListAdapter(new ArrayAdapter<String>(this,
-        R.layout.location_list_cell,
+        R.layout.list_cell,
         R.id.text,
         result));
     }
@@ -66,14 +66,14 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             }
             
             setListAdapter(new ArrayAdapter<String>(this, 
-            R.layout.location_list_cell,
+            R.layout.list_cell,
             R.id.text, 
             result));
         } else {
             String[] result = new String[] { "No results.." };
             
             setListAdapter(new ArrayAdapter<String>(this, 
-            R.layout.location_list_cell,
+            R.layout.list_cell,
             R.id.text, 
             result));
         }

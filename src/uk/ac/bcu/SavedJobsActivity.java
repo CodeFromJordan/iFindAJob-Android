@@ -1,25 +1,26 @@
 // Author: Jordan Hancock
 // Name: SavedJobsActivity.java
-// Last Modified: 7/02/2014
+// Last Modified: 11/02/2014
 // Purpose: Activity which is used for saved jobs activity page.
 
 package uk.ac.bcu;
 
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class SavedJobsActivity extends Activity {
+public class SavedJobsActivity extends ListActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        // Set up super
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.saved_jobs);
         
+        // Set up interface
+        setContentView(R.layout.saved_jobs);
         this.setTitle("Saved Jobs");
     }
     
@@ -55,18 +56,6 @@ public class SavedJobsActivity extends Activity {
         return false;
     }
     
-    // When hardware key released
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch(keyCode)
-        {
-            case KeyEvent.KEYCODE_HOME:
-                // Display home activity
-                return true;
-            case KeyEvent.KEYCODE_SEARCH:
-                // Display search activity
-                return true; 
-        }
-        return false;
-    }
+    static final String[] CELLS = 
+        new String[] { "No saved jobs to display.." };
 }

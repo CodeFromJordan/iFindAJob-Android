@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: MainActivity.java
-// Last Modified: 7/02/2014
+// Last Modified: 11/02/2014
 // Purpose: Activity which is used for main activity page.
 
 package uk.ac.bcu;
@@ -8,7 +8,6 @@ package uk.ac.bcu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -18,10 +17,12 @@ public class MainActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+        // Set up super
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
         super.setTitle("iFindAJob");
+        
+        // Set up interface
+        setContentView(R.layout.main);
         this.setTitle("Home");
     }
     
@@ -54,23 +55,7 @@ public class MainActivity extends Activity
                 startActivity(activityToSwitchTo);
                 return true; 
         }
-        
-        
-        return false;
-    }
-    
-    // When hardware key released
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        switch(keyCode)
-        {
-            case KeyEvent.KEYCODE_HOME:
-                // Display home activity
-                return true;
-            case KeyEvent.KEYCODE_SEARCH:
-                // Display search activity
-                return true; 
-        }
+         
         return false;
     }
 }
