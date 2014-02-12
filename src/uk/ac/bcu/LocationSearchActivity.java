@@ -1,17 +1,26 @@
 // Author: Jordan Hancock
 // Name: LocationSearchActivity.java
-// Last Modified: 11/02/2014
+// Last Modified: 12/02/2014
 // Purpose: Activity which is used for location search activity page.
 
 package uk.ac.bcu;
 
 import android.app.ListActivity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -19,6 +28,9 @@ import android.widget.ArrayAdapter;
  */
 public class LocationSearchActivity extends ListActivity {
     // Declare objects here (as private)
+    private ArrayList<JSONObject> locations;
+    private BroadcastReceiver receiver;
+    private static final String LOCATION_FILENAME = "saved_locations.json";
     
     /** Called when the activity is first created. */
     @Override
@@ -26,15 +38,115 @@ public class LocationSearchActivity extends ListActivity {
         // Set up super
         super.onCreate(savedInstanceState);
         
-        // Populate list
-        setListAdapter(new ArrayAdapter<String>(this,
-        R.layout.list_cell,
-        R.id.text, CELLS));
+        locations = loadLocations(); // Load locations and their queries
         
         // Set up interface
         setContentView(R.layout.search); // Layout
         this.setTitle("Search"); // Title
         setupControls(); // Controls
+        
+        // Set up for cells
+        String[] CELLS = new String[locations.size()];
+        for(int i = 0; i < locations.size(); i++) {
+            try {
+                CELLS[i] = locations.get(i).getString("city");
+            } catch (JSONException ex) { }
+        }
+        
+        // Receive intent broadcast from SearchableActivity
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(SearchableActivity.LOCATION_SEARCH_CLICKED);
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Read data from intent extras
+                String jsonString = intent.getExtras().getString("location_result");
+                String originalQuery = intent.getExtras().getString("location_query");
+                try {
+                    JSONObject object = new JSONObject(jsonString); // Turn extra intro JSON object
+                    object.put("query", originalQuery); // Add query to the JSON object
+                    addLocation(object); // Add the location to the list
+                } catch (JSONException ex) { }
+            }
+        };
+        registerReceiver(receiver, intentFilter); // Make the receiver usable
+        
+        // Set up cells
+        setListAdapter(new ArrayAdapter<String>(this,
+            R.layout.list_cell, R.id.text, CELLS));
+    }
+    
+    // Add a location to the global arraylist
+    private void addLocation(JSONObject location) {
+        locations.add(location);
+        saveLocations(locations);
+        
+        // Update list
+        String[] CELLS = new String[locations.size()];
+        for(int i = 0; i < locations.size(); i++) {
+            try {
+                CELLS[i] = locations.get(i).getString("city");
+            } catch (JSONException ex) { }
+        }
+        
+        // Set up list
+        setListAdapter(new ArrayAdapter<String>(this, 
+                R.layout.list_cell,
+                R.id.text,
+                CELLS));
+    }
+    
+    // Save locations from global arraylist to JSON file
+    public void saveLocations(ArrayList<JSONObject> locationsList) {
+        try {
+            JSONObject listWrapper = new JSONObject();
+            JSONArray list = new JSONArray(locations);
+            listWrapper.put("locations", list);
+            
+            String strList = listWrapper.toString();
+            
+            FileOutputStream outputStream;
+            try {
+                outputStream = openFileOutput(LOCATION_FILENAME, Context.MODE_PRIVATE);
+                outputStream.write(strList.getBytes());
+                outputStream.close();
+            } catch (Exception e) { }
+        } catch (JSONException ex) { }
+    }
+    
+    // Load locations from JSON file to global arraylist
+    public ArrayList<JSONObject> loadLocations() {
+        ArrayList<JSONObject> locationList = new ArrayList<JSONObject>();
+        try {
+            StringBuilder strList = new StringBuilder();
+            FileInputStream inputStream;
+            
+            try {
+                inputStream = openFileInput(LOCATION_FILENAME);
+                
+                byte[] buffer = new byte[1024];
+                
+                while(inputStream.read(buffer) != -1) {
+                    strList.append(new String(buffer));
+                }
+                
+                inputStream.close();
+            } catch (Exception e) { }
+            
+            JSONObject listWrapper = new JSONObject(strList.toString());
+            JSONArray list = listWrapper.getJSONArray("locations");
+            
+            for(int i = 0; i < list.length(); i++) {
+                locationList.add(list.getJSONObject(i));
+            }
+        } catch (JSONException ex) { }
+        return locationList;
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
     
     // When Menu button clicked
@@ -96,7 +208,4 @@ public class LocationSearchActivity extends ListActivity {
         });
         */
     }
-    
-    static final String[] CELLS = 
-            new String[] { "No saved locations to display.." };
 }

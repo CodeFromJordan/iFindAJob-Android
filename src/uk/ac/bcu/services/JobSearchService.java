@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: LocationSearchService.java
-// Last Modified: 11/02/2014
+// Last Modified: 12/02/2014
 // Purpose: Manages second part of search where jobs are pulled from API for selected location.
 
 package uk.ac.bcu.services;

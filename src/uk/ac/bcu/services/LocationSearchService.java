@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: LocationSearchService.java
-// Last Modified: 11/02/2014
+// Last Modified: 12/02/2014
 // Purpose: Manages first part of search where locations are pulled from API.
 
 package uk.ac.bcu.services;
@@ -25,6 +25,9 @@ public class LocationSearchService extends AbstractService {
     
     public LocationSearchService(String query) {
         this.query = URLEncoder.encode(query);
+    }
+    public String getQuery() {
+        return query;
     }
     
    public JSONArray getResults() {
