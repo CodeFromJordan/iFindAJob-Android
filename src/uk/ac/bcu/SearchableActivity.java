@@ -33,6 +33,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        this.setTitle("Find jobs in..");
         searchResults = new ArrayList<JSONObject>();        
         
         // Get the intent, verify the action and get the query
@@ -60,7 +61,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
     
     public void doSearch(String query) {
         LocationSearchService service = new LocationSearchService(query);
-        String[] result = new String[] { "Searching.." };
+        String[] result = new String[] { "Searching for locations.." };
         
         service.addListener(this);
         thread = new Thread(service);

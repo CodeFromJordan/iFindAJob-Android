@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -27,10 +29,10 @@ import org.json.JSONObject;
  * @author jordan
  */
 public class LocationSearchActivity extends ListActivity {
-    // Declare objects here (as private)
     private ArrayList<JSONObject> locations;
     private BroadcastReceiver receiver;
     private static final String LOCATION_FILENAME = "saved_locations.json";
+    public static final String LOCATION_SAVED_CLICKED = "location_saved_selected";
     
     /** Called when the activity is first created. */
     @Override
@@ -42,16 +44,8 @@ public class LocationSearchActivity extends ListActivity {
         
         // Set up interface
         setContentView(R.layout.search); // Layout
-        this.setTitle("Search"); // Title
+        this.setTitle("Saved Locations"); // Title
         setupControls(); // Controls
-        
-        // Set up for cells
-        String[] CELLS = new String[locations.size()];
-        for(int i = 0; i < locations.size(); i++) {
-            try {
-                CELLS[i] = locations.get(i).getString("city");
-            } catch (JSONException ex) { }
-        }
         
         // Receive intent broadcast from SearchableActivity
         IntentFilter intentFilter = new IntentFilter();
@@ -71,9 +65,25 @@ public class LocationSearchActivity extends ListActivity {
         };
         registerReceiver(receiver, intentFilter); // Make the receiver usable
         
-        // Set up cells
-        setListAdapter(new ArrayAdapter<String>(this,
-            R.layout.list_cell, R.id.text, CELLS));
+        updateListView();
+    }
+    
+    // When saved location result is selected
+    // Pass it to JobSearchActivity to do search
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        if(position < locations.size()) {
+            Intent intent = new Intent(getBaseContext(), JobSearchActivity.class);
+            intent.putExtra("location", locations.get(position).toString());
+            startActivity(intent);
+            
+            /*
+            Intent clickedSavedLocation = new Intent();
+            clickedSavedLocation.setAction(LOCATION_SAVED_CLICKED);
+            clickedSavedLocation.putExtra("location", locations.get(position).toString());
+            this.sendBroadcast(clickedSavedLocation);
+            */
+        }
     }
     
     // Add a location to the global arraylist
@@ -81,15 +91,19 @@ public class LocationSearchActivity extends ListActivity {
         locations.add(location);
         saveLocations(locations);
         
-        // Update list
+        updateListView();
+    }
+    
+    private void updateListView() {
+        // Set up for cells
         String[] CELLS = new String[locations.size()];
         for(int i = 0; i < locations.size(); i++) {
             try {
-                CELLS[i] = locations.get(i).getString("city");
+                CELLS[i] = locations.get(i).getString("city") + " - " + locations.get(i).getString("query");
             } catch (JSONException ex) { }
         }
         
-        // Set up list
+         // Set up list
         setListAdapter(new ArrayAdapter<String>(this, 
                 R.layout.list_cell,
                 R.id.text,

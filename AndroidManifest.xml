@@ -13,7 +13,7 @@
                  android:icon="@drawable/icon">
         
         <!-- Main activity -->
-        <activity android:name="MainActivity"
+        <activity android:name=".MainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleTop">
             <intent-filter>
@@ -23,10 +23,10 @@
         </activity>
         
         <!-- Location search activity -->
-        <activity android:name="LocationSearchActivity"
+        <activity android:name=".LocationSearchActivity"
                   android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.LOCATIONSEARCH" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             
@@ -36,12 +36,17 @@
         </activity>
         
         <!-- Job search activity -->
-        <activity android:name="JobSearchActivity"
+        <activity android:name=".JobSearchActivity"
                   android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.JOBSEARCH" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         
         <!-- Search bar activity, this performs the searches -->
-        <activity android:name=".SearchableActivity">
+        <activity android:name=".SearchableActivity"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
