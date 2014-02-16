@@ -1,8 +1,7 @@
 // Author: Jordan Hancock
 // Name: MainActivity.java
-// Last Modified: 11/02/2014
+// Last Modified: 16/02/2014
 // Purpose: Activity which is used for main (home) activity page.
-
 package uk.ac.bcu;
 
 import android.app.Activity;
@@ -11,34 +10,34 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends Activity
-{
-    /** Called when the activity is first created. */
+public class MainActivity extends Activity {
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         // Set up super
         super.onCreate(savedInstanceState);
         super.setTitle("iFindAJob");
-        
+
         // Set up interface
         setContentView(R.layout.main);
         this.setTitle("Home");
     }
-    
+
     // When Menu button clicked
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-    
+
     // When item in menu selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent activityToSwitchTo = new Intent();
-        switch(item.getItemId())
-        {
+        switch (item.getItemId()) {
             case R.id.itemHomeActivity:
                 // Set as Main activity
                 activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
@@ -53,9 +52,9 @@ public class MainActivity extends Activity
                 // Set as Saved Jobs activity
                 activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
                 startActivity(activityToSwitchTo);
-                return true; 
+                return true;
         }
-         
+
         return false;
     }
 }

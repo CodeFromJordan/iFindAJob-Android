@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SavedJobsActivity.java
-// Last Modified: 11/02/2014
+// Last Modified: 16/02/2014
 // Purpose: Activity which is used for saved jobs activity page.
 package uk.ac.bcu;
 
@@ -39,12 +39,12 @@ public class SavedJobsActivity extends ListActivity {
 
         updateListView();
     }
-    
+
     // When job result is selected
     // Pass it to JobDetailActivity to display results
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        if(position < jobs.size()) {
+        if (position < jobs.size()) {
             Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
             intent.putExtra("job", jobs.get(position).toString());
             intent.putExtra("from_saved", true); // It's from saved job page
