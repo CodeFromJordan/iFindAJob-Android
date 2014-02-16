@@ -63,6 +63,11 @@
             </intent-filter>
         </activity>
         
+        <!-- Job detail activity -->
+        <activity android:name="JobDetailActivity"
+                  android:launchMode="singleTop"
+                  android:label="@string/app_label">
+        </activity>
     </application>
     <!-- END APP -->
 </manifest> 

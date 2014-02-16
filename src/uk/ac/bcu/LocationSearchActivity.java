@@ -76,13 +76,6 @@ public class LocationSearchActivity extends ListActivity {
             Intent intent = new Intent(getBaseContext(), JobSearchActivity.class);
             intent.putExtra("location", locations.get(position).toString());
             startActivity(intent);
-            
-            /*
-            Intent clickedSavedLocation = new Intent();
-            clickedSavedLocation.setAction(LOCATION_SAVED_CLICKED);
-            clickedSavedLocation.putExtra("location", locations.get(position).toString());
-            this.sendBroadcast(clickedSavedLocation);
-            */
         }
     }
     

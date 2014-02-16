@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,25 +41,6 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
         setupControls(); // Controls
         jobs = new ArrayList<JSONObject>();
         
-        /*
-        // Receive intent broadcast from LocationSearchActivity
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(LocationSearchActivity.LOCATION_SAVED_CLICKED);
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Read data from intent extras
-                String jsonString = intent.getExtras().getString("location");
-                try {
-                    JSONObject object = new JSONObject(jsonString); // Turn extra intro JSON object
-                    doSearch(object.getString("id"), object.getString("query")); // Start search with id and query
-                    context.startActivity(intent);
-                } catch (JSONException ex) { }
-            }
-        };
-        registerReceiver(receiver, intentFilter); // Make the receiver usable
-        */
-        
         Intent intent = getIntent();
         String jsonString = intent.getExtras().getString("location");
         try {
@@ -80,6 +63,17 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
                 R.layout.list_cell,
                 R.id.text,
                 CELLS));
+    }
+    
+    // When job result is selected
+    // Pass it to JobDetailActivity to display results
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        if(position < jobs.size()) {
+            Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
+            intent.putExtra("job", jobs.get(position).toString());
+            startActivity(intent);
+        }
     }
     
     // Add a location to the global arraylist

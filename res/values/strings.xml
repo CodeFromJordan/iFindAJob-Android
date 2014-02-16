@@ -14,4 +14,16 @@
     <!-- Search page -->
     <string name="search_button_text">Look for Jobs</string>
     <string name="search_hint">Enter job keywords..</string>
+    
+    <!-- Job details page -->
+    <string name="details_job_map">Job City on Map</string>
+    <string name="details_job_title">Title:</string>
+    <string name="details_job_company_name">Company:</string>
+    <string name="details_job_city">City:</string>
+    <string name="details_job_post_date">Post Date:</string>
+    <string name="details_job_has_relocation_assistance">Has Relocation Assistance:</string>
+    <string name="details_job_requires_telecommuting">Requires Telecommuting:</string>
+    <string name="details_job_description_header">Job Description:</string>
+    <string name="details_job_view_browser">View in Browser</string>
+    <string name="details_job_save">Save Job</string>
 </resources>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent" 
+              android:layout_height="fill_parent">
+    
+    <!-- Top details -->
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent" 
+                  android:layout_height="wrap_content" 
+                  android:layout_margin="2pt">
+        
+        <!-- Map image-->
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="55pt"
+                      android:layout_height="55pt"
+                      android:layout_margin="2pt">
+            <ImageView android:id="@+id/job_map"
+                       android:layout_width="fill_parent"
+                       android:layout_height="fill_parent"
+                       android:contentDescription="@string/details_job_map" />
+        </LinearLayout> 
+        
+        <!-- Leftmost job details-->
+        <LinearLayout android:orientation="vertical"
+                      android:layout_width="0pt" 
+                      android:layout_height="80pt" 
+                      android:layout_weight="1"
+                      android:layout_margin="2pt">
+            <!-- Job title -->
+            <TextView android:id="@+id/txtJobTitle" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt"
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_title"/>
+            <!-- Job company name -->
+            <TextView android:id="@+id/txtJobCompanyName" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt" 
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_company_name"/>
+            <!-- Job city -->
+            <TextView android:id="@+id/txtJobCity" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt" 
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_city"/>
+            <!-- Post date -->
+            <TextView android:id="@+id/txtJobPostDate" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt" 
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_post_date"/>
+            <!-- Has relocation assistance -->
+            <TextView android:id="@+id/txtJobHasRelocationAssistance" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt" 
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_has_relocation_assistance"/>
+            <!-- Requires telecommuting -->
+            <TextView android:id="@+id/txtJobRequiresTelecommuting" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="15pt" 
+                      android:textSize="10dp" 
+                      android:text="@string/details_job_requires_telecommuting"/>
+        </LinearLayout>
+    </LinearLayout>  
+        
+    <!-- Bottom details -->
+    <LinearLayout android:orientation="vertical" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="0pt"
+                      android:layout_weight="0.5" 
+                      android:layout_margin="2pt">
+        <!-- Job description header -->
+        <TextView android:id="@+id/txtJobDescriptionHeader" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="wrap_content" 
+                      android:text="@string/details_job_description_header"
+                      android:layout_margin="2pt" />
+        <!-- Job description details -->
+        <ScrollView android:layout_width="fill_parent" 
+                        android:layout_height="0dp" 
+                        android:layout_weight="1">
+            <TextView android:id="@+id/txtJobDescriptionDetails" 
+                          android:layout_width="fill_parent" 
+                          android:layout_height="fill_parent"
+                          android:textColor="#ffffff"
+                          android:layout_margin="2pt" />
+        </ScrollView>
+    </LinearLayout>
+        
+    <!-- Buttons -->
+    <LinearLayout android:orientation="horizontal" 
+                      android:layout_width="fill_parent" 
+                      android:layout_height="20pt">
+        <!-- View in browser -->
+        <Button android:id="@+id/btnViewInBrowser" 
+                    android:layout_width="0dp" 
+                    android:layout_height="20pt" 
+                    android:layout_weight="1"
+                    android:text="@string/details_job_view_browser" />
+        <!-- Save job -->
+        <Button android:id="@+id/btnSaveJob" 
+                    android:layout_width="0dp" 
+                    android:layout_height="20pt" 
+                    android:layout_weight="1"
+                    android:text="@string/details_job_save" />
+    </LinearLayout>  
+</LinearLayout>
