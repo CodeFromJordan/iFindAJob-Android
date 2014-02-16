@@ -38,7 +38,6 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
         // Set up interface
         setContentView(R.layout.search); // Layout
         this.setTitle("Job Results"); // Title
-        setupControls(); // Controls
         jobs = new ArrayList<JSONObject>();
         
         Intent intent = getIntent();
@@ -72,6 +71,7 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
         if(position < jobs.size()) {
             Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
             intent.putExtra("job", jobs.get(position).toString());
+            intent.putExtra("from_saved", false); // It's not from saved job page
             startActivity(intent);
         }
     }
@@ -155,21 +155,4 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
             result));
         }
     }    
-    
-    private void setupControls() {
-        // NEED TO MAKE LIST ITEMS CLICKABLE
-        // They then take pass location ID to JobSearchActivity
-        // Which then uses them to perform search and populate its results
-        // Which then when clicked take you to job detail page
-        
-        // Template code for clickable control
-        /*
-        clickableObject = (Button)findViewById(R.id.object_id);
-        clickableObject.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Do task here
-            }
-        });
-        */
-    }
 }

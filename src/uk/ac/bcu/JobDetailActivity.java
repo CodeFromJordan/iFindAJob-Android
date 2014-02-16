@@ -1,17 +1,26 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JobDetailActivity extends Activity {
     private JSONObject job;
+    private static final String JOBS_FILENAME = "saved_jobs.json";
     
     // Declare interface controls
     private ImageView imgJobMap;
@@ -48,7 +57,21 @@ public class JobDetailActivity extends Activity {
         btnSaveJob = (Button)findViewById(R.id.btnSaveJob);
         
         // Button click code
+        // View job details on AuthenticJobs webpage
+        btnViewInBrowser.setOnClickListener(new OnClickListener() { 
+            public void onClick(View v) {
+                try {
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(job.getString("url"))));
+                } catch (JSONException ex) { }
+            }
+        });
         
+        // Save job to file
+        btnSaveJob.setOnClickListener(new OnClickListener () {
+            public void onClick(View v) {
+                saveJob();
+            }
+        });
         
         // Get data from intent extra
         Intent intent = this.getIntent();
@@ -56,6 +79,11 @@ public class JobDetailActivity extends Activity {
         try {
         job = new JSONObject(jsonString); // Parse it into JSON Object
         } catch (JSONException ex) { }
+        
+        // Button visibility code
+        if(intent.getExtras().getBoolean("from_saved")) { // If from Saved Jobs page
+            btnSaveJob.setVisibility(View.INVISIBLE); // Hide button as it wont be needed
+        }
         
         // Put data into text boxes
         try {
@@ -79,5 +107,59 @@ public class JobDetailActivity extends Activity {
                 txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
             }
         } catch (JSONException ex) { }
+    }
+    
+    // Saves a new job to the list of saved jobs
+    private void saveJob() {
+        try {
+            // Creates a JSONArray from loading file
+            JSONObject listWrapper = new JSONObject();
+            JSONArray list = new JSONArray(loadJobs());
+            list.put(job); // Add current job to array
+            listWrapper.put("jobs", list);
+            
+            String strList = listWrapper.toString(); // Turns it into string
+            
+            // Write to file
+            FileOutputStream outputStream;
+            try {
+                outputStream = openFileOutput(JOBS_FILENAME, Context.MODE_PRIVATE);
+                outputStream.write(strList.getBytes());
+                outputStream.close();
+            } catch (Exception e) { }
+        } catch (JSONException ex) { }
+    }
+    
+    // Used to load when saving
+    private ArrayList<JSONObject> loadJobs() {
+        ArrayList<JSONObject> jobList = new ArrayList<JSONObject>(); // ArrayList to store contents of file
+        
+        try {
+            StringBuilder strList = new StringBuilder();
+            FileInputStream inputStream;
+            
+            // Read in file
+            try {
+                inputStream = openFileInput(JOBS_FILENAME);
+                
+                byte[] buffer = new byte[1024];
+                
+                while(inputStream.read(buffer) != -1) {
+                    strList.append(new String(buffer));
+                }
+                
+                inputStream.close();
+            } catch (Exception e) { }
+            
+            // Convert read in details to list
+            JSONObject listWrapper = new JSONObject(strList.toString());
+            JSONArray list = listWrapper.getJSONArray("jobs");
+            
+            for(int i = 0; i < list.length(); i++) {
+                jobList.add(list.getJSONObject(i));
+            }
+        } catch (JSONException ex) { }
+        
+        return jobList; // Return current contents of file
     }
 }

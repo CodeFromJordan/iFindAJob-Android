@@ -24,10 +24,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- *
- * @author jordan
- */
 public class LocationSearchActivity extends ListActivity {
     private ArrayList<JSONObject> locations;
     private BroadcastReceiver receiver;
