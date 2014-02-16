@@ -3,6 +3,7 @@ package uk.ac.bcu;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,6 +64,7 @@ public class JobDetailActivity extends Activity {
             txtJobCompanyName.setText(txtJobCompanyName.getText() + " " + job.getJSONObject("company").getString("id"));
             txtJobCity.setText(txtJobCity.getText() + " " + job.getJSONObject("company").getJSONObject("location").getString("city"));
             txtJobPostDate.setText(txtJobPostDate.getText() + " " + job.getString("post_date"));
+            txtJobDescription.setText(Html.fromHtml(job.getString("description")));
             
             // Translate from 1/0 to Yes/No
             if(job.getString("relocation_assistance") == "1") {
