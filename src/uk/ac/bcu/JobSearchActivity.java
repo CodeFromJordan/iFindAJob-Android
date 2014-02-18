@@ -15,6 +15,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
+import uk.ac.availability.InternetConnection;
 import uk.ac.bcu.services.AbstractService;
 import uk.ac.bcu.services.IServiceListener;
 import uk.ac.bcu.services.JobSearchService;
@@ -92,22 +93,25 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent activityToSwitchTo = new Intent();
-        switch (item.getItemId()) {
-            case R.id.itemHomeActivity:
-                // Set as Main activity Locations
-                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
-            case R.id.itemSearchActivity:
-                // Set as Search activity
-                onSearchRequested();
-                return true;
-            case R.id.itemSavedJobsActivity:
-                // Set as Saved Jobs activity
-                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
+
+        if (item.getItemId() == R.id.itemHomeActivity) {
+            // Set as Main activity
+            activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
         }
+
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            return false;
+        }
+
+        if (item.getItemId() == R.id.itemSavedJobsActivity) {
+            // Set as Saved Jobs activity
+            activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
         return false;
     }
 

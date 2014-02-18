@@ -4,6 +4,7 @@
 // Purpose: Activity which is used for controlling search bar for Location search.
 package uk.ac.bcu;
 
+import uk.ac.dbentity.Location;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;

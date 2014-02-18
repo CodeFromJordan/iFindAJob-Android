@@ -13,12 +13,13 @@
         <!-- Map image-->
         <LinearLayout android:orientation="vertical"
                       android:layout_width="55pt"
-                      android:layout_height="55pt"
+                      android:layout_height="80pt"
                       android:layout_margin="2pt">
             <ImageView android:id="@+id/job_map"
                        android:layout_width="fill_parent"
                        android:layout_height="fill_parent"
-                       android:contentDescription="@string/details_job_map" />
+                       android:contentDescription="@string/details_job_map"
+                       android:background="#ffffff" />
         </LinearLayout> 
         
         <!-- Leftmost job details-->

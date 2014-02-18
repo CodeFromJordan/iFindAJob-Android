@@ -1,8 +1,8 @@
 // Author: Jordan Hancock
 // Name: Location.java
-// Last Modified: 16/02/2014
-// Purpose: Activity which is used for to store location details.
-package uk.ac.bcu;
+// Last Modified: 18/02/2014
+// Purpose: Class used to map Location db entity.
+package uk.ac.dbentity;
 
 public class Location {
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import uk.ac.availability.InternetConnection;
 
 public class SavedJobsActivity extends ListActivity {
 
@@ -115,23 +116,30 @@ public class SavedJobsActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent activityToSwitchTo = new Intent();
-        switch (item.getItemId()) {
-            case R.id.itemHomeActivity:
-                // Set as Main activity
-                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
-            case R.id.itemSearchActivity:
-                // Set as Search activity
+
+        if (item.getItemId() == R.id.itemHomeActivity) {
+            // Set as Main activity
+            activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            // Set as Search activity
+            if (InternetConnection.hasInternetConnection(this)) {
                 activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
-            case R.id.itemSavedJobsActivity:
-                // Set as Saved Jobs activity
-                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
+            }
         }
+
+        if (item.getItemId() == R.id.itemSavedJobsActivity) {
+            // Set as Saved Jobs activity
+            activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
         return false;
     }
 }

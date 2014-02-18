@@ -22,9 +22,14 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import uk.ac.availability.InternetConnection;
+import uk.ac.bcu.services.AbstractService;
+import uk.ac.bcu.services.IServiceListener;
+import uk.ac.bcu.services.MapDownloadService;
 
-public class JobDetailActivity extends Activity {
+public class JobDetailActivity extends Activity implements IServiceListener {
 
+    private Thread imageThread;
     private JSONObject job;
     private static final String JOBS_FILENAME = "saved_jobs.json";
 
@@ -116,6 +121,16 @@ public class JobDetailActivity extends Activity {
             } else {
                 txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
             }
+
+            // Get image
+            if (InternetConnection.hasInternetConnection(this)) {
+                String latitude = job.getJSONObject("company").getJSONObject("location").getString("lat");
+                String longitude = job.getJSONObject("company").getJSONObject("location").getString("lng");
+                MapDownloadService mapDownloadService = new MapDownloadService(latitude, longitude);
+                mapDownloadService.addListener(this);
+                imageThread = new Thread(mapDownloadService);
+                imageThread.start();
+            }
         } catch (JSONException ex) {
         }
     }
@@ -182,23 +197,37 @@ public class JobDetailActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent activityToSwitchTo = new Intent();
-        switch (item.getItemId()) {
-            case R.id.itemHomeActivity:
-                // Set as Main activity
-                activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
-            case R.id.itemSearchActivity:
-                // Set as Search activity
+
+        if (item.getItemId() == R.id.itemHomeActivity) {
+            // Set as Main activity
+            activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            // Set as Search activity
+            if (InternetConnection.hasInternetConnection(this)) {
                 activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
-            case R.id.itemSavedJobsActivity:
-                // Set as Saved Jobs activity
-                activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
+            }
         }
+
+        if (item.getItemId() == R.id.itemSavedJobsActivity) {
+            // Set as Saved Jobs activity
+            activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
         return false;
+    }
+
+    public void ServiceComplete(AbstractService service) {
+        if (!service.hasError()) {
+            MapDownloadService mapDownloadService = (MapDownloadService) service;
+            imgJobMap.setImageBitmap(mapDownloadService.getMap());
+        }
     }
 }
