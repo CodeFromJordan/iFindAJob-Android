@@ -3,12 +3,14 @@
 // Last Modified: 18/02/2014
 // Purpose: Class used to map Job db entity.
 // Library: ORMLite
-package uk.ac.dbentity;
+package uk.ac.model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+@DatabaseTable
 public class Job {
     // Members and database field annotations
     @DatabaseField(id = true)
