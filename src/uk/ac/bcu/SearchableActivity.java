@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +25,7 @@ import uk.ac.bcu.services.LocationSearchService;
  */
 public class SearchableActivity extends ListActivity implements IServiceListener {
 
-    private Thread thread;        // Set up controls
+    private Thread thread;
     private String originalQuery;
     private ArrayList<JSONObject> searchResults;
     public static final String LOCATION_SEARCH_CLICKED = "location_result_selected";
@@ -50,6 +49,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
     // Pass it back to LocationSearchActivity, along with the query, and close this activity.
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        // Return string of JSONObject to LocationSearchActivity to be added to database and shown
         if (position < searchResults.size()) {
             Intent clickedSearchLocation = new Intent();
             clickedSearchLocation.setAction(LOCATION_SEARCH_CLICKED);
@@ -77,29 +77,35 @@ public class SearchableActivity extends ListActivity implements IServiceListener
 
     public void ServiceComplete(AbstractService service) {
         if (!service.hasError()) {
+            
             LocationSearchService locationService = (LocationSearchService) service;
             final int numberOfResults = locationService.getResults().length(); // Get number of results from search
+            
             Location[] result = new Location[numberOfResults];
+            
             originalQuery = locationService.getQuery();
+            
             searchResults.clear();
 
+            // For all results, create a Locaiton object using JSON constructor
             for (int i = 0; i < numberOfResults; i++) {
                 try {
                     searchResults.add(locationService.getResults().getJSONObject(i));
-                    result[i] = new Location(locationService.getResults().getJSONObject(i).getString("id"),
-                            locationService.getResults().getJSONObject(i).getString("city"));
+                    result[i] = new Location(locationService.getResults().getJSONObject(i), originalQuery);
                 } catch (JSONException ex) {
-                    result[i] = new Location("Error", "There has been an error..");
+                    result[i] = new Location("0", "Error", "There has been an error..");
                 }
             }
 
+            // Update list on this page
             setListAdapter(new ArrayAdapter<Location>(this,
                     R.layout.list_cell,
                     R.id.text,
                     result));
-        } else {
+        } else { // No results clause
             String[] result = new String[]{"No results.."};
 
+            // Update list to say No Results..
             setListAdapter(new ArrayAdapter<String>(this,
                     R.layout.list_cell,
                     R.id.text,

@@ -15,14 +15,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.util.ArrayList;
 import java.util.List;
-import uk.ac.availability.DataStorage;
 import uk.ac.model.Job;
 import uk.ac.model.Location;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + 
-            "/iFindAJobDB.sqlite";
+            "/iFindAJob/iFindAJobDB.sqlite";
 
     private static final int DATABASE_VERSION = 1; // Change when database structure changes
 

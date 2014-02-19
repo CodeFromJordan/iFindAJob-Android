@@ -14,14 +14,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import uk.ac.availability.InternetConnection;
+import uk.ac.db.DatabaseManager;
+import uk.ac.model.Job;
+import uk.ac.model.Location;
 
 public class SavedJobsActivity extends ListActivity {
 
-    private ArrayList<JSONObject> jobs;
+    private List<Job> jobs;
+    private List<String> jobsText;
     private static final String JOBS_FILENAME = "saved_jobs.json";
 
     /**
@@ -32,11 +36,26 @@ public class SavedJobsActivity extends ListActivity {
         // Set up super
         super.onCreate(savedInstanceState);
 
-        jobs = loadJobs(); // Load jobs from file
+        setupListView();
 
         // Set up interface
         setContentView(R.layout.saved_jobs);
         this.setTitle("Saved Jobs");
+
+        updateListView();
+    }
+
+    // Reads Locations from database and populates cells
+    private void setupListView() {
+
+        // Read location objects from database
+        jobs = DatabaseManager.getInstance().getAllJobs();
+        jobsText = new ArrayList<String>();
+
+        // Loop through all locations and get strings to write to cells
+        for (Job job : jobs) {
+            jobsText.add(job.getTitle() + " - " + job.getCity());
+        }
 
         updateListView();
     }
@@ -47,7 +66,17 @@ public class SavedJobsActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (position < jobs.size()) {
             Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
-            intent.putExtra("job", jobs.get(position).toString());
+            intent.putExtra("job_id", jobs.get(position).getID());
+            intent.putExtra("job_title", jobs.get(position).getTitle());
+            intent.putExtra("job_company_name", jobs.get(position).getCompanyName());
+            intent.putExtra("job_city", jobs.get(position).getCity());
+            intent.putExtra("job_date_posted", jobs.get(position).getDatePosted());
+            intent.putExtra("job_relocation", jobs.get(position).getHasRelocationSupport());
+            intent.putExtra("job_telecommunication", jobs.get(position).getRequiresTelecommunication());
+            intent.putExtra("job_description", jobs.get(position).getDescription());
+            intent.putExtra("job_url", jobs.get(position).getURL());
+            intent.putExtra("job_lat", jobs.get(position).getLatitude());
+            intent.putExtra("job_lon", jobs.get(position).getLongitude());
             intent.putExtra("from_saved", true); // It's from saved job page
             startActivity(intent);
         }
@@ -61,56 +90,14 @@ public class SavedJobsActivity extends ListActivity {
         return true;
     }
 
-    // Used to load when saving
-    private ArrayList<JSONObject> loadJobs() {
-        ArrayList<JSONObject> jobList = new ArrayList<JSONObject>(); // ArrayList to store contents of file
-
-        try {
-            StringBuilder strList = new StringBuilder();
-            FileInputStream inputStream;
-
-            // Read in file
-            try {
-                inputStream = openFileInput(JOBS_FILENAME);
-
-                byte[] buffer = new byte[1024];
-
-                while (inputStream.read(buffer) != -1) {
-                    strList.append(new String(buffer));
-                }
-
-                inputStream.close();
-            } catch (Exception e) {
-            }
-
-            // Convert read in details to list
-            JSONObject listWrapper = new JSONObject(strList.toString());
-            JSONArray list = listWrapper.getJSONArray("jobs");
-
-            for (int i = 0; i < list.length(); i++) {
-                jobList.add(list.getJSONObject(i));
-            }
-        } catch (JSONException ex) {
-        }
-
-        return jobList; // Return current contents of file
-    }
-
     private void updateListView() {
-        // Set up for cells
-        String[] CELLS = new String[jobs.size()];
-        for (int i = 0; i < jobs.size(); i++) {
-            try {
-                CELLS[i] = jobs.get(i).getString("title");
-            } catch (JSONException ex) {
-            }
-        }
-
         // Set up list
-        setListAdapter(new ArrayAdapter<String>(this,
-                R.layout.list_cell,
-                R.id.text,
-                CELLS));
+        if (jobsText.size() > 0) {
+            setListAdapter(new ArrayAdapter<String>(this,
+                    R.layout.list_cell,
+                    R.id.text,
+                    jobsText));
+        }
     }
 
     // When item in menu selected

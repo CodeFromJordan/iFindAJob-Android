@@ -19,6 +19,9 @@ public class Location {
 
     @DatabaseField
     private String city;
+    
+    @DatabaseField
+    private String query;
 
     // No argument constructor
     // Used for ORMLite
@@ -26,17 +29,19 @@ public class Location {
 
     }
 
-    public Location(String id, String city) {
+    public Location(String id, String city, String query) {
         this.id = id;
         this.city = city;
+        this.query = query;
     }
 
     // Pass in Location JSONObject, parse into regular object
     // Used when reading in search results
-    public Location(JSONObject location) {
+    public Location(JSONObject location, String query) {
         try {
             this.id = location.getString("id");
             this.city = location.getString("city");
+            this.query = query;
         } catch (JSONException ex) {
         }
     }
@@ -49,7 +54,12 @@ public class Location {
         return this.city;
     }
     
+    public String getQuery() {
+        return this.query;
+    }
+    
+    @Override
     public String toString() {
-        return this.city;
+        return this.city + " - " + this.query;
     }
 }

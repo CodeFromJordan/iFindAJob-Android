@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import uk.ac.availability.InternetConnection;
+import uk.ac.db.DatabaseManager;
 
 public class MainActivity extends Activity {
 
@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
         // Set up super
         super.onCreate(savedInstanceState);
         super.setTitle("iFindAJob");
+        DatabaseManager.init(this);
 
         // Set up interface
         setContentView(R.layout.main);

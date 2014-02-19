@@ -15,7 +15,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
-import uk.ac.availability.InternetConnection;
 import uk.ac.bcu.services.AbstractService;
 import uk.ac.bcu.services.IServiceListener;
 import uk.ac.bcu.services.JobSearchService;
@@ -40,11 +39,8 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
 
         Intent intent = getIntent();
         String jsonString = intent.getExtras().getString("location");
-        try {
-            JSONObject object = new JSONObject(jsonString); // Turn extra intro JSON object
-            doSearch(object.getString("query"), object.getString("id")); // Start search with id and query
-        } catch (JSONException ex) {
-        }
+        doSearch(intent.getExtras().getString("location_query"), 
+                intent.getExtras().getString("location_id")); // Start search with id and query
     }
 
     private void updateListView() {

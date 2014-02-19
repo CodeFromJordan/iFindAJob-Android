@@ -14,6 +14,7 @@ public class DatabaseManager {
 
     static private DatabaseManager instance;
 
+    // Singleton
     static public void init(Context ctx) {
         if (instance == null) {
             instance = new DatabaseManager(ctx);
@@ -34,6 +35,7 @@ public class DatabaseManager {
         return this.helper;
     }
 
+    // Get all locations from database
     public List<Location> getAllLocations() throws SQLException {
         List<Location> locations = null;
 
@@ -46,6 +48,7 @@ public class DatabaseManager {
         return locations;
     }
 
+    // Get all jobs from database
     public List<Job> getAllJobs() {
         List<Job> jobs = null;
 
@@ -56,5 +59,23 @@ public class DatabaseManager {
         }
 
         return jobs;
+    }
+
+    // Add new location to database
+    public void addNewLocation(Location newLocation) {
+        try {
+            getHelper().getLocationDao().create(newLocation);
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // Add new job to database
+    public void addNewJob(Job newJob) {
+        try {
+            getHelper().getJobDao().create(newJob);
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

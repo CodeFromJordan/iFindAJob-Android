@@ -27,11 +27,13 @@ import uk.ac.availability.InternetConnection;
 import uk.ac.bcu.services.AbstractService;
 import uk.ac.bcu.services.IServiceListener;
 import uk.ac.bcu.services.MapDownloadService;
+import uk.ac.db.DatabaseManager;
+import uk.ac.model.Job;
 
 public class JobDetailActivity extends Activity implements IServiceListener {
 
     private Thread imageThread;
-    private JSONObject job;
+    private Job job;
     private static final String JOBS_FILENAME = "saved_jobs.json";
 
     // Declare interface controls
@@ -74,10 +76,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         // View job details on AuthenticJobs webpage
         btnViewInBrowser.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(job.getString("url"))));
-                } catch (JSONException ex) {
-                }
+                startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(job.getURL())));
             }
         });
 
@@ -92,7 +91,24 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         Intent intent = this.getIntent();
         String jsonString = intent.getExtras().getString("job"); // Shove it into a string
         try {
-            job = new JSONObject(jsonString); // Parse it into JSON Object
+            if (intent.getExtras().getBoolean("from_saved") == false) {
+                job = new Job(new JSONObject(jsonString)); // Use JSONObject to create Job object
+            } else {
+               String id = intent.getExtras().getString("job_id");
+               String title = intent.getExtras().getString("job_title");
+               String company_name = intent.getExtras().getString("job_company_name");
+               String city = intent.getExtras().getString("job_city");
+               String date_posted = intent.getExtras().getString("job_date_posted");
+               boolean relocation = intent.getExtras().getBoolean("job_relocation");
+               boolean telecommunication = intent.getExtras().getBoolean("job_telecommunication");
+               String description = intent.getExtras().getString("job_description");
+               String url = intent.getExtras().getString("job_url");
+               String lat = intent.getExtras().getString("job_lat");
+               String lon = intent.getExtras().getString("job_lon");
+               
+               job = new Job(id, title, company_name, city, 
+                       date_posted, relocation, telecommunication, description, url, lat, lon);
+            }
         } catch (JSONException ex) {
         }
 
@@ -102,61 +118,39 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         }
 
         // Put data into text boxes
-        try {
-            // Direct reads
-            txtJobTitle.setText(txtJobTitle.getText() + " " + job.getString("title"));
-            txtJobCompanyName.setText(txtJobCompanyName.getText() + " " + job.getJSONObject("company").getString("id"));
-            txtJobCity.setText(txtJobCity.getText() + " " + job.getJSONObject("company").getJSONObject("location").getString("city"));
-            txtJobPostDate.setText(txtJobPostDate.getText() + " " + job.getString("post_date"));
-            txtJobDescription.setText(Html.fromHtml(job.getString("description")));
+        // Direct reads
+        txtJobTitle.setText(txtJobTitle.getText() + " " + job.getTitle());
+        txtJobCompanyName.setText(txtJobCompanyName.getText() + " " + job.getCompanyName());
+        txtJobCity.setText(txtJobCity.getText() + " " + job.getCity());
+        txtJobPostDate.setText(txtJobPostDate.getText() + " " + job.getDatePosted());
+        txtJobDescription.setText(Html.fromHtml(job.getDescription()));
 
-            // Translate from 1/0 to Yes/No
-            if (job.getString("relocation_assistance") == "1") {
-                txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "Yes");
-            } else {
-                txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "No");
-            }
+        // Translate from 1/0 to Yes/No
+        if (job.getHasRelocationSupport()) {
+            txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "Yes");
+        } else {
+            txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "No");
+        }
 
-            if (job.getString("telecommuting") == "1") {
-                txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "Yes");
-            } else {
-                txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
-            }
+        if (job.getRequiresTelecommunication()) {
+            txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "Yes");
+        } else {
+            txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
+        }
 
-            // Get image
-            if (InternetConnection.hasInternetConnection(this)) {
-                String latitude = job.getJSONObject("company").getJSONObject("location").getString("lat");
-                String longitude = job.getJSONObject("company").getJSONObject("location").getString("lng");
-                MapDownloadService mapDownloadService = new MapDownloadService(latitude, longitude);
-                mapDownloadService.addListener(this);
-                imageThread = new Thread(mapDownloadService);
-                imageThread.start();
-            }
-        } catch (JSONException ex) {
+        // Get image
+        if (InternetConnection.hasInternetConnection(this)) {
+            MapDownloadService mapDownloadService = new MapDownloadService(job.getLatitude(), job.getLongitude());
+            mapDownloadService.addListener(this);
+            imageThread = new Thread(mapDownloadService);
+            imageThread.start();
         }
     }
 
     // Saves a new job to the list of saved jobs
     private void saveJob() {
-        try {
-            // Creates a JSONArray from loading file
-            JSONObject listWrapper = new JSONObject();
-            JSONArray list = new JSONArray(loadJobs());
-            list.put(job); // Add current job to array
-            listWrapper.put("jobs", list);
-
-            String strList = listWrapper.toString(); // Turns it into string
-
-            // Write to file
-            FileOutputStream outputStream;
-            try {
-                outputStream = openFileOutput(JOBS_FILENAME, Context.MODE_PRIVATE);
-                outputStream.write(strList.getBytes());
-                outputStream.close();
-            } catch (Exception e) {
-            }
-        } catch (JSONException ex) {
-        }
+        // Add new Job to database
+        DatabaseManager.getInstance().addNewJob(job);
     }
 
     // Used to load when saving

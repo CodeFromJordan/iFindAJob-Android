@@ -16,18 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
-import org.json.JSONArray;
+import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
-import uk.ac.availability.InternetConnection;
+import uk.ac.db.DatabaseManager;
+import uk.ac.model.Location;
 
 public class LocationSearchActivity extends ListActivity {
 
-    private ArrayList<JSONObject> locations;
+    List<Location> locations;
+    List<String> locationsText;
     private BroadcastReceiver receiver;
     private static final String LOCATION_FILENAME = "saved_locations.json";
     public static final String LOCATION_SAVED_CLICKED = "location_saved_selected";
@@ -40,12 +39,11 @@ public class LocationSearchActivity extends ListActivity {
         // Set up super
         super.onCreate(savedInstanceState);
 
-        locations = loadLocations(); // Load locations and their queries
+        setupListView(); // Get data for cells
 
         // Set up interface
         setContentView(R.layout.search); // Layout
         this.setTitle("Saved Locations"); // Title
-        setupControls(); // Controls
 
         // Receive intent broadcast from SearchableActivity
         IntentFilter intentFilter = new IntentFilter();
@@ -54,17 +52,36 @@ public class LocationSearchActivity extends ListActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Read data from intent extras
-                String jsonString = intent.getExtras().getString("location_result");
-                String originalQuery = intent.getExtras().getString("location_query");
+                JSONObject clickedResult; // Store JSONObject of clicked result
+                String result = intent.getExtras().getString("location_result"); // Stores string of clicked result
+                String query = intent.getExtras().getString("location_query"); // Get string from intent
                 try {
-                    JSONObject object = new JSONObject(jsonString); // Turn extra intro JSON object
-                    object.put("query", originalQuery); // Add query to the JSON object
-                    addLocation(object); // Add the location to the list
+                    clickedResult = new JSONObject(result); // Converts string to JSONObject for clicked result
+
+                    // Store into a new location object
+                    Location newLocation = new Location(clickedResult, query);
+                    // Add and save location
+                    addLocation(newLocation);
                 } catch (JSONException ex) {
                 }
             }
         };
         registerReceiver(receiver, intentFilter); // Make the receiver usable
+
+        updateListView(); // Refresh list view after adding new item
+    }
+
+    // Reads Locations from database and populates cells
+    private void setupListView() {
+
+        // Read location objects from database
+        locations = DatabaseManager.getInstance().getAllLocations();
+        locationsText = new ArrayList<String>();
+
+        // Loop through all locations and get strings to write to cells
+        for (Location loc : locations) {
+            locationsText.add(loc.getCity());
+        }
 
         updateListView();
     }
@@ -75,85 +92,35 @@ public class LocationSearchActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (position < locations.size()) {
             Intent intent = new Intent(getBaseContext(), JobSearchActivity.class);
-            intent.putExtra("location", locations.get(position).toString());
+            intent.putExtra("location_id", locations.get(position).getID());
+            intent.putExtra("location_query", locations.get(position).getQuery());
             startActivity(intent);
         }
     }
 
     // Add a location to the global arraylist
-    private void addLocation(JSONObject location) {
-        locations.add(location);
-        saveLocations(locations);
+    private void addLocation(Location location) {
+        locations.add(location); // Add new location object to list
+        locationsText.add(location.getCity()); // Add city name to list
+        saveLocation(location); // Save location to database
 
-        updateListView();
+        updateListView(); // Refresh list view
     }
 
     private void updateListView() {
-        // Set up for cells
-        String[] CELLS = new String[locations.size()];
-        for (int i = 0; i < locations.size(); i++) {
-            try {
-                CELLS[i] = locations.get(i).getString("city") + " - " + locations.get(i).getString("query");
-            } catch (JSONException ex) {
-            }
-        }
-
         // Set up list
-        setListAdapter(new ArrayAdapter<String>(this,
-                R.layout.list_cell,
-                R.id.text,
-                CELLS));
+        if (locationsText.size() > 0) {
+            setListAdapter(new ArrayAdapter<String>(this,
+                    R.layout.list_cell,
+                    R.id.text,
+                    locationsText));
+        }
     }
 
     // Save locations from global arraylist to JSON file
-    public void saveLocations(ArrayList<JSONObject> locationsList) {
-        try {
-            JSONObject listWrapper = new JSONObject();
-            JSONArray list = new JSONArray(locations);
-            listWrapper.put("locations", list);
-
-            String strList = listWrapper.toString();
-
-            FileOutputStream outputStream;
-            try {
-                outputStream = openFileOutput(LOCATION_FILENAME, Context.MODE_PRIVATE);
-                outputStream.write(strList.getBytes());
-                outputStream.close();
-            } catch (Exception e) {
-            }
-        } catch (JSONException ex) {
-        }
-    }
-
-    // Load locations from JSON file to global arraylist
-    public ArrayList<JSONObject> loadLocations() {
-        ArrayList<JSONObject> locationList = new ArrayList<JSONObject>();
-        try {
-            StringBuilder strList = new StringBuilder();
-            FileInputStream inputStream;
-
-            try {
-                inputStream = openFileInput(LOCATION_FILENAME);
-
-                byte[] buffer = new byte[1024];
-
-                while (inputStream.read(buffer) != -1) {
-                    strList.append(new String(buffer));
-                }
-
-                inputStream.close();
-            } catch (Exception e) {
-            }
-
-            JSONObject listWrapper = new JSONObject(strList.toString());
-            JSONArray list = listWrapper.getJSONArray("locations");
-
-            for (int i = 0; i < list.length(); i++) {
-                locationList.add(list.getJSONObject(i));
-            }
-        } catch (JSONException ex) {
-        }
-        return locationList;
+    public void saveLocation(Location location) {
+        // Add new Location to database
+        DatabaseManager.getInstance().addNewLocation(location);
     }
 
     @Override
@@ -206,22 +173,5 @@ public class LocationSearchActivity extends ListActivity {
                 return true;
         }
         return false;
-    }
-
-    private void setupControls() {
-        // NEED TO MAKE LIST ITEMS CLICKABLE
-        // They then take pass location ID to JobSearchActivity
-        // Which then uses them to perform search and populate its results
-        // Which then when clicked take you to job detail page
-
-        // Template code for clickable control
-        /*
-         clickableObject = (Button)findViewById(R.id.object_id);
-         clickableObject.setOnClickListener(new View.OnClickListener() {
-         public void onClick(View v) {
-         // Do task here
-         }
-         });
-         */
     }
 }

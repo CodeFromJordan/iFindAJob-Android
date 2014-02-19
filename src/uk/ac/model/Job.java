@@ -40,6 +40,12 @@ public class Job {
     @DatabaseField
     private String url;
     
+    @DatabaseField
+    private String latitude;
+    
+    @DatabaseField
+    private String longitude;
+    
     // No argument constructor
     // Used for ORMLite
     public Job() {
@@ -50,7 +56,8 @@ public class Job {
     // Used when loading in already stored results
     public Job(String id, String title, String companyName, 
             String city, String datePosted, boolean hasRelocationSupport, 
-            boolean requiresTelecommunication, String url) {
+            boolean requiresTelecommunication, String description, 
+            String url, String latitude, String longitude) {
         this.id = id;
         this.title = title;
         this.companyName = companyName;
@@ -58,6 +65,10 @@ public class Job {
         this.datePosted = datePosted;
         this.hasRelocationSupport = hasRelocationSupport;
         this.requiresTelecommunitcation = requiresTelecommunication;
+        this.description = description;
+        this.url = url;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     
     // Pass in Job JSONObject, parse into regular object
@@ -69,7 +80,10 @@ public class Job {
             this.companyName = job.getJSONObject("company").getString("id");
             this.city = job.getJSONObject("company").getJSONObject("location").getString("city");
             this.datePosted = job.getString("post_date");
+            this.description = job.getString("description");
             this.url = job.getString("url");
+            this.latitude = job.getJSONObject("company").getJSONObject("location").getString("lat");
+            this.longitude = job.getJSONObject("company").getJSONObject("location").getString("lng");
             
             // Translate from 1/0 to Yes/No
             if (job.getString("relocation_assistance") == "1") {
@@ -114,7 +128,19 @@ public class Job {
         return this.requiresTelecommunitcation;
     }
     
+    public String getDescription() {
+        return this.description;
+    }
+    
     public String getURL() {
         return this.url;
+    }
+    
+    public String getLatitude() {
+        return this.latitude;
+    }
+    
+    public String getLongitude() {
+        return this.longitude;
     }
 }
