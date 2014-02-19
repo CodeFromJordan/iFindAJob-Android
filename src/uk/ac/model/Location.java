@@ -61,6 +61,6 @@ public class Location {
     
     @Override
     public String toString() {
-        return this.city + " - " + this.query;
+        return this.city;
     }
 }

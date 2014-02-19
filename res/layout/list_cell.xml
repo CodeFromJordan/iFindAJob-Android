@@ -10,7 +10,7 @@
            android:textStyle="bold"
            android:layout_width="fill_parent" 
            android:layout_height="wrap_content" 
-           android:layout_margin="5sp"
+           android:layout_margin="5px"
            android:textColor="#926239"
     />
 </LinearLayout>

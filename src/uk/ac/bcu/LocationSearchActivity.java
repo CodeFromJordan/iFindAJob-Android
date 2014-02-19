@@ -72,14 +72,16 @@ public class LocationSearchActivity extends ListActivity {
 
     // Reads Locations from database and populates cells
     private void setupListView() {
-
+        // Wipe already existing locations list
+        locations = new ArrayList<Location>();
+        
         // Read location objects from database
         locations = DatabaseManager.getInstance().getAllLocations();
         locationsText = new ArrayList<String>();
 
         // Loop through all locations and get strings to write to cells
         for (Location loc : locations) {
-            locationsText.add(loc.getCity());
+            locationsText.add(loc.getCity() + " - " + loc.getQuery());
         }
 
         updateListView();
@@ -100,10 +102,9 @@ public class LocationSearchActivity extends ListActivity {
     // Add a location to the global arraylist
     private void addLocation(Location location) {
         locations.add(location); // Add new location object to list
-        locationsText.add(location.getCity()); // Add city name to list
         saveLocation(location); // Save location to database
 
-        updateListView(); // Refresh list view
+        setupListView(); // Refresh list view
     }
 
     private void updateListView() {

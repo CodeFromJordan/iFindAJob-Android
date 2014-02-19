@@ -30,7 +30,7 @@ public class MapDownloadService extends AbstractService {
         // uses latitude and longitude for Google maps static image
         String urlString = "http://maps.googleapis.com/maps/api/staticmap?center=" + 
                 latitude + "," + longitude + 
-                "&zoom=12&size=55x80&sensor=false";
+                "&zoom=14&size=150x100&sensor=false";
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(urlString);
         
@@ -38,6 +38,7 @@ public class MapDownloadService extends AbstractService {
         
         boolean error;
         
+        // Convert returned data to BitMap
         try {
             in = client.execute(request).getEntity().getContent();
             imgMap = BitmapFactory.decodeStream(in);

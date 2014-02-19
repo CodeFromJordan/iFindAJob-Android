@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/activity_background"
-    >
-<TextView 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content"
-    android:textColor="#926239"
-    android:textSize="40sp"
-    android:gravity="center_horizontal"
-    android:text="@string/app_name"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@drawable/activity_background"
+>
+    <TextView 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:textColor="#49311c"
+        android:textSize="40sp"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
     />
 
-<TextView 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content"
-    android:textColor="#926239"
-    android:textSize="15sp"
-    android:gravity="left"
-    android:text="@string/app_intro1"
+    <TextView 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10px"
+        android:layout_marginLeft="5px"
+        android:layout_marginRight="5px"
+        android:textColor="#926239"
+        android:textSize="14sp"
+        android:gravity="fill"
+        android:text="@string/app_intro1"
     />
-<TextView 
-    android:layout_width="fill_parent" 
-    android:layout_height="wrap_content"
-    android:textColor="#926239"
-    android:textSize="15sp"
-    android:gravity="left"
-    android:text="@string/app_intro2"
+
+    <TextView 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5px"
+        android:layout_marginRight="5px"
+        android:textColor="#926239"
+        android:textSize="14sp"
+        android:gravity="fill"
+        android:text="@string/app_intro2"
     />
 </LinearLayout>
 

@@ -10,13 +10,13 @@
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="fill_parent" 
                   android:layout_height="wrap_content" 
-                  android:layout_margin="2pt">
+                  android:layout_margin="2px">
         
         <!-- Map image-->
         <LinearLayout android:orientation="vertical"
-                      android:layout_width="55pt"
-                      android:layout_height="80pt"
-                      android:layout_margin="2pt">
+                      android:layout_width="150dp"
+                      android:layout_height="100dp"
+                      android:layout_margin="2px">
             <ImageView android:id="@+id/job_map"
                        android:layout_width="fill_parent"
                        android:layout_height="fill_parent"
@@ -27,49 +27,49 @@
         <!-- Leftmost job details-->
         <LinearLayout android:orientation="vertical"
                       android:layout_width="0pt" 
-                      android:layout_height="80pt" 
+                      android:layout_height="110dp" 
                       android:layout_weight="1"
-                      android:layout_margin="2pt">
+                      android:layout_margin="2px">
             <!-- Job title -->
             <TextView android:id="@+id/txtJobTitle" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt"
-                      android:textSize="10dp" 
+                      android:layout_height="wrap_content"
+                      android:textSize="10sp" 
                       android:text="@string/details_job_title"
                       android:textColor="#926239"/>
             <!-- Job company name -->
             <TextView android:id="@+id/txtJobCompanyName" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt" 
-                      android:textSize="10dp" 
+                      android:layout_height="15dp" 
+                      android:textSize="10sp" 
                       android:text="@string/details_job_company_name"
                       android:textColor="#926239" />
             <!-- Job city -->
             <TextView android:id="@+id/txtJobCity" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt" 
-                      android:textSize="10dp" 
+                      android:layout_height="15dp" 
+                      android:textSize="10sp" 
                       android:text="@string/details_job_city"
                       android:textColor="#926239" />
             <!-- Post date -->
             <TextView android:id="@+id/txtJobPostDate" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt" 
-                      android:textSize="10dp" 
+                      android:layout_height="15dp" 
+                      android:textSize="10sp" 
                       android:text="@string/details_job_post_date"
                       android:textColor="#926239" />
             <!-- Has relocation assistance -->
             <TextView android:id="@+id/txtJobHasRelocationAssistance" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt" 
-                      android:textSize="10dp" 
+                      android:layout_height="15dp" 
+                      android:textSize="10sp" 
                       android:text="@string/details_job_has_relocation_assistance"
                       android:textColor="#926239" />
             <!-- Requires telecommuting -->
             <TextView android:id="@+id/txtJobRequiresTelecommuting" 
                       android:layout_width="fill_parent" 
-                      android:layout_height="15pt" 
-                      android:textSize="10dp" 
+                      android:layout_height="15dp" 
+                      android:textSize="10sp" 
                       android:text="@string/details_job_requires_telecommuting"
                       android:textColor="#926239" />
         </LinearLayout>
@@ -78,15 +78,15 @@
     <!-- Bottom details -->
     <LinearLayout android:orientation="vertical" 
                   android:layout_width="fill_parent" 
-                  android:layout_height="0pt"
+                  android:layout_height="0dp"
                   android:layout_weight="0.5" 
-                  android:layout_margin="2pt">
+                  android:layout_margin="4px">
         <!-- Job description header -->
         <TextView android:id="@+id/txtJobDescriptionHeader" 
                   android:layout_width="fill_parent" 
                   android:layout_height="wrap_content" 
                   android:text="@string/details_job_description_header"
-                  android:layout_margin="2pt"
+                  android:layout_margin="2px"
                   android:textColor="#926239" />
         <!-- Job description details -->
         <ScrollView android:layout_width="fill_parent" 
@@ -95,20 +95,24 @@
             <TextView android:id="@+id/txtJobDescriptionDetails" 
                       android:layout_width="fill_parent" 
                       android:layout_height="fill_parent"
+                      android:textSize="11sp" 
                       android:textColor="#926239"
-                      android:layout_margin="2pt" />
+                      android:layout_margin="2px" />
         </ScrollView>
     </LinearLayout>
         
     <!-- Buttons -->
     <LinearLayout android:orientation="horizontal" 
                   android:layout_width="fill_parent" 
-                  android:layout_height="20pt">
+                  android:layout_height="20dp"
+                  android:layout_marginBottom="4px"
+                  android:layout_marginRight="4px"
+                  android:layout_marginLeft="4px">
         <!-- View in browser -->
         <Button android:id="@+id/btnViewInBrowser" 
                 android:layout_width="0dp" 
                 android:layout_height="20dp" 
-                android:layout_margin="4dp"
+                android:layout_marginRight="2px"
                 android:layout_weight="1"
                 android:text="@string/details_job_view_browser"
                 android:textColor="#ffffff"
@@ -117,7 +121,7 @@
         <Button android:id="@+id/btnSaveJob" 
                 android:layout_width="0dp" 
                 android:layout_height="20dp" 
-                android:layout_margin="4dp"
+                android:layout_marginLeft="2px"
                 android:layout_weight="1"
                 android:text="@string/details_job_save"
                 android:textColor="#ffffff"
