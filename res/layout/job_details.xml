@@ -27,9 +27,10 @@
         <!-- Leftmost job details-->
         <LinearLayout android:orientation="vertical"
                       android:layout_width="0pt" 
-                      android:layout_height="110dp" 
+                      android:layout_height="wrap_content" 
                       android:layout_weight="1"
-                      android:layout_margin="2px">
+                      android:layout_margin="2px"
+                      android:background="#77FFFFFF">
             <!-- Job title -->
             <TextView android:id="@+id/txtJobTitle" 
                       android:layout_width="fill_parent" 
@@ -80,7 +81,8 @@
                   android:layout_width="fill_parent" 
                   android:layout_height="0dp"
                   android:layout_weight="0.5" 
-                  android:layout_margin="4px">
+                  android:layout_margin="4px"
+                  android:background="#77FFFFFF">
         <!-- Job description header -->
         <TextView android:id="@+id/txtJobDescriptionHeader" 
                   android:layout_width="fill_parent" 
