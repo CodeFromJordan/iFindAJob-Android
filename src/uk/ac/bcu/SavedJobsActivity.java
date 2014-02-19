@@ -57,6 +57,7 @@ public class SavedJobsActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+
         return true;
     }
 
@@ -126,11 +127,9 @@ public class SavedJobsActivity extends ListActivity {
 
         if (item.getItemId() == R.id.itemSearchActivity) {
             // Set as Search activity
-            if (InternetConnection.hasInternetConnection(this)) {
-                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
-            }
+            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {

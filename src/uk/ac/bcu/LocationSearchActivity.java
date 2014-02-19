@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -165,6 +166,7 @@ public class LocationSearchActivity extends ListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+
         return true;
     }
 

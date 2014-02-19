@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +26,7 @@ import uk.ac.bcu.services.LocationSearchService;
  */
 public class SearchableActivity extends ListActivity implements IServiceListener {
 
-    private Thread thread;
+    private Thread thread;        // Set up controls
     private String originalQuery;
     private ArrayList<JSONObject> searchResults;
     public static final String LOCATION_SEARCH_CLICKED = "location_result_selected";
@@ -36,7 +37,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
         setContentView(R.layout.search);
         this.setTitle("Find jobs in..");
         searchResults = new ArrayList<JSONObject>();
-
+        
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemHomeActivity"
           android:title="Home" 
-          android:icon="@*android:drawable/ic_menu_home"/>
+          android:icon="@android:drawable/ic_menu_compass"/>
     <item android:id="@+id/itemSearchActivity"
           android:title="Find Jobs" 
           android:icon="@android:drawable/ic_menu_search"/>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -193,6 +194,14 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         return jobList; // Return current contents of file
     }
 
+    // When Menu button clicked
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        return true;
+    }
+
     // When item in menu selected
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -207,11 +216,9 @@ public class JobDetailActivity extends Activity implements IServiceListener {
 
         if (item.getItemId() == R.id.itemSearchActivity) {
             // Set as Search activity
-            if (InternetConnection.hasInternetConnection(this)) {
-                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-                startActivity(activityToSwitchTo);
-                return true;
-            }
+            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {
