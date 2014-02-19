@@ -5,13 +5,14 @@
 package uk.ac.availability;
 
 public class DataStorage {
+
     // Checks if internal storage should be used (always call this)
     public static boolean shouldUseInternalStorage() {
         // If SD card is available, return False
         // If not available, return True
         return !shouldUseExternalStorage();
     }
-    
+
     // Checks if SD is available and should be used
     private static boolean shouldUseExternalStorage() {
         // If it is available, return True

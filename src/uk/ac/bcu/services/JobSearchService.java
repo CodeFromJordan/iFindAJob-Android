@@ -24,15 +24,18 @@ public class JobSearchService extends AbstractService {
     private String location_id;
     private JSONArray results;
 
+    // Create instance of service
     public JobSearchService(String query, String location_id) {
         this.query = URLEncoder.encode(query);
         this.location_id = location_id;
     }
 
+    // Getters
     public JSONArray getResults() {
         return results;
     }
 
+    // Main service, use HttpClient to download bytes and convert to JSONArray
     public void run() {
         String api_key = "5e389f733b28cfe33ac2f03aef32fb1a";
         String url = "http://www.authenticjobs.com/api/?api_key=" + api_key

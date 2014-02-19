@@ -14,19 +14,17 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-/**
- *
- * @author jordan
- */
 public class LocationSearchService extends AbstractService {
 
     private String query;
     private JSONArray results;
 
+    // Create instance of service
     public LocationSearchService(String query) {
         this.query = URLEncoder.encode(query);
     }
 
+    // Getters
     public String getQuery() {
         return query;
     }
@@ -34,7 +32,8 @@ public class LocationSearchService extends AbstractService {
     public JSONArray getResults() {
         return results;
     }
-
+    
+    // Main service, use HttpClient to download bytes and convert to JSONArray
     public void run() {
         String api_key = "5e389f733b28cfe33ac2f03aef32fb1a";
         String url = "http://www.authenticjobs.com/api/?api_key="

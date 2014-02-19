@@ -20,6 +20,7 @@ import uk.ac.model.Location;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
+    // Database file path (uses SDcard)
     private static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + 
             "/iFindAJob/iFindAJobDB.sqlite";
 
@@ -46,6 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    // Used to update database structure
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {

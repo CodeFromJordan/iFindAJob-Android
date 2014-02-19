@@ -5,7 +5,6 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,10 +16,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import uk.ac.availability.InternetConnection;
@@ -34,7 +29,6 @@ public class JobDetailActivity extends Activity implements IServiceListener {
 
     private Thread imageThread;
     private Job job;
-    private static final String JOBS_FILENAME = "saved_jobs.json";
 
     // Declare interface controls
     private ImageView imgJobMap;
@@ -94,20 +88,20 @@ public class JobDetailActivity extends Activity implements IServiceListener {
             if (intent.getExtras().getBoolean("from_saved") == false) {
                 job = new Job(new JSONObject(jsonString)); // Use JSONObject to create Job object
             } else {
-               String id = intent.getExtras().getString("job_id");
-               String title = intent.getExtras().getString("job_title");
-               String company_name = intent.getExtras().getString("job_company_name");
-               String city = intent.getExtras().getString("job_city");
-               String date_posted = intent.getExtras().getString("job_date_posted");
-               boolean relocation = intent.getExtras().getBoolean("job_relocation");
-               boolean telecommunication = intent.getExtras().getBoolean("job_telecommunication");
-               String description = intent.getExtras().getString("job_description");
-               String url = intent.getExtras().getString("job_url");
-               String lat = intent.getExtras().getString("job_lat");
-               String lon = intent.getExtras().getString("job_lon");
-               
-               job = new Job(id, title, company_name, city, 
-                       date_posted, relocation, telecommunication, description, url, lat, lon);
+                String id = intent.getExtras().getString("job_id");
+                String title = intent.getExtras().getString("job_title");
+                String company_name = intent.getExtras().getString("job_company_name");
+                String city = intent.getExtras().getString("job_city");
+                String date_posted = intent.getExtras().getString("job_date_posted");
+                boolean relocation = intent.getExtras().getBoolean("job_relocation");
+                boolean telecommunication = intent.getExtras().getBoolean("job_telecommunication");
+                String description = intent.getExtras().getString("job_description");
+                String url = intent.getExtras().getString("job_url");
+                String lat = intent.getExtras().getString("job_lat");
+                String lon = intent.getExtras().getString("job_lon");
+
+                job = new Job(id, title, company_name, city,
+                        date_posted, relocation, telecommunication, description, url, lat, lon);
             }
         } catch (JSONException ex) {
         }
@@ -151,41 +145,6 @@ public class JobDetailActivity extends Activity implements IServiceListener {
     private void saveJob() {
         // Add new Job to database
         DatabaseManager.getInstance().addNewJob(job);
-    }
-
-    // Used to load when saving
-    private ArrayList<JSONObject> loadJobs() {
-        ArrayList<JSONObject> jobList = new ArrayList<JSONObject>(); // ArrayList to store contents of file
-
-        try {
-            StringBuilder strList = new StringBuilder();
-            FileInputStream inputStream;
-
-            // Read in file
-            try {
-                inputStream = openFileInput(JOBS_FILENAME);
-
-                byte[] buffer = new byte[1024];
-
-                while (inputStream.read(buffer) != -1) {
-                    strList.append(new String(buffer));
-                }
-
-                inputStream.close();
-            } catch (Exception e) {
-            }
-
-            // Convert read in details to list
-            JSONObject listWrapper = new JSONObject(strList.toString());
-            JSONArray list = listWrapper.getJSONArray("jobs");
-
-            for (int i = 0; i < list.length(); i++) {
-                jobList.add(list.getJSONObject(i));
-            }
-        } catch (JSONException ex) {
-        }
-
-        return jobList; // Return current contents of file
     }
 
     // When Menu button clicked

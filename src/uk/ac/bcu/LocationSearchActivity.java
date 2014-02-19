@@ -28,7 +28,6 @@ public class LocationSearchActivity extends ListActivity {
     List<Location> locations;
     List<String> locationsText;
     private BroadcastReceiver receiver;
-    private static final String LOCATION_FILENAME = "saved_locations.json";
     public static final String LOCATION_SAVED_CLICKED = "location_saved_selected";
 
     /**

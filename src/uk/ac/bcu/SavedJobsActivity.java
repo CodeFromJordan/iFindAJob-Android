@@ -12,15 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import uk.ac.db.DatabaseManager;
 import uk.ac.model.Job;
-import uk.ac.model.Location;
 
 public class SavedJobsActivity extends ListActivity {
 

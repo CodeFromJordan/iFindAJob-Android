@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: Job.java
-// Last Modified: 18/02/2014
+// Last Modified: 19/02/2014
 // Purpose: Class used to map Job db entity.
 // Library: ORMLite
 package uk.ac.model;
@@ -100,6 +100,7 @@ public class Job {
         } catch (JSONException ex) { }
     }
     
+    // Getters
     public String getID() {
         return this.id;
     }

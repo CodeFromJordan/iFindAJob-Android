@@ -10,10 +10,6 @@ import android.os.Message;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- *
- * @author jordan
- */
 public abstract class AbstractService implements Serializable, Runnable {
 
     private ArrayList<IServiceListener> listeners;

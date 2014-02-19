@@ -39,7 +39,7 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
 
         Intent intent = getIntent();
         String jsonString = intent.getExtras().getString("location");
-        doSearch(intent.getExtras().getString("location_query"), 
+        doSearch(intent.getExtras().getString("location_query"),
                 intent.getExtras().getString("location_id")); // Start search with id and query
     }
 

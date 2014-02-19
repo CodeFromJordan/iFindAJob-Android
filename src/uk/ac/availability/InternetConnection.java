@@ -14,10 +14,10 @@ public class InternetConnection {
         // Creates connectivity manager using context network info
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        
+
         // Gets a list of active networks available to the device
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        
+
         // Returns true if network list not null and device is connected
         // Else returns false
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();

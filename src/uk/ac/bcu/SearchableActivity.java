@@ -19,10 +19,6 @@ import uk.ac.bcu.services.AbstractService;
 import uk.ac.bcu.services.IServiceListener;
 import uk.ac.bcu.services.LocationSearchService;
 
-/**
- *
- * @author jordan
- */
 public class SearchableActivity extends ListActivity implements IServiceListener {
 
     private Thread thread;
@@ -36,7 +32,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
         setContentView(R.layout.search);
         this.setTitle("Find jobs in..");
         searchResults = new ArrayList<JSONObject>();
-        
+
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -77,14 +73,14 @@ public class SearchableActivity extends ListActivity implements IServiceListener
 
     public void ServiceComplete(AbstractService service) {
         if (!service.hasError()) {
-            
+
             LocationSearchService locationService = (LocationSearchService) service;
             final int numberOfResults = locationService.getResults().length(); // Get number of results from search
-            
+
             Location[] result = new Location[numberOfResults];
-            
+
             originalQuery = locationService.getQuery();
-            
+
             searchResults.clear();
 
             // For all results, create a Locaiton object using JSON constructor

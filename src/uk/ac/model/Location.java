@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: Location.java
-// Last Modified: 18/02/2014
+// Last Modified: 19/02/2014
 // Purpose: Class used to map Location db entity.
 // Library: ORMLite
 package uk.ac.model;
@@ -46,6 +46,7 @@ public class Location {
         }
     }
 
+    // Getters
     public String getID() {
         return this.id;
     }

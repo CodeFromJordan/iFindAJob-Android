@@ -25,7 +25,9 @@ public class MapDownloadService extends AbstractService {
         this.longitude = longitude;
     }
 
+    // Main service, use HttpClient to download bytes and convert to BitmapImage
     public void run() {
+        // uses latitude and longitude for Google maps static image
         String urlString = "http://maps.googleapis.com/maps/api/staticmap?center=" + 
                 latitude + "," + longitude + 
                 "&zoom=12&size=55x80&sensor=false";
