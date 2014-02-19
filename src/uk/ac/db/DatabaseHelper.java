@@ -7,6 +7,7 @@ package uk.ac.db;
 import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -14,12 +15,14 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.availability.DataStorage;
 import uk.ac.model.Job;
 import uk.ac.model.Location;
 
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
-    private static final String DATABASE_NAME = "iFindAJobDB.sqlite";
+    private static final String DATABASE_NAME = Environment.getExternalStorageDirectory().getAbsolutePath() + 
+            "/iFindAJobDB.sqlite";
 
     private static final int DATABASE_VERSION = 1; // Change when database structure changes
 

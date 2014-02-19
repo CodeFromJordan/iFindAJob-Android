@@ -48,4 +48,8 @@ public class Location {
     public String getCity() {
         return this.city;
     }
+    
+    public String toString() {
+        return this.city;
+    }
 }
