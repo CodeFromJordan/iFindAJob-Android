@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: JobDetailActivity.java
-// Last Modified: 16/02/2014
+// Last Modified: 20/02/2014
 // Purpose: Activity which is used for individual job detail display.
 package uk.ac.bcu;
 
@@ -177,6 +177,30 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         if (item.getItemId() == R.id.itemSavedJobsActivity) {
             // Set as Saved Jobs activity
             activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+        
+        if (item.getItemId() == R.id.itemSocialShare) {
+            // Open share dialog
+            // Create intent
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            // Set content type
+            sharingIntent.setType("text/plain");
+
+            // Set text and put to extras
+            String shareBody = "iFindAJob Android: Want to be an '" + job.getTitle() + "'?" +
+                    " Check out: " + job.getURL();
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share Job");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+            startActivity(Intent.createChooser(sharingIntent, "Share Via..")); // Social type chooser
+        }
+
+        if (item.getItemId() == R.id.itemPreferences) {
+            // Open preferences activity
+            activityToSwitchTo = new Intent(getBaseContext(), PreferencesActivity.class);
             startActivity(activityToSwitchTo);
             return true;
         }

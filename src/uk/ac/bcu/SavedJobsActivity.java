@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SavedJobsActivity.java
-// Last Modified: 16/02/2014
+// Last Modified: 20/02/2014
 // Purpose: Activity which is used for saved jobs activity page.
 package uk.ac.bcu;
 
@@ -117,6 +117,29 @@ public class SavedJobsActivity extends ListActivity {
         if (item.getItemId() == R.id.itemSavedJobsActivity) {
             // Set as Saved Jobs activity
             activityToSwitchTo = new Intent(getBaseContext(), SavedJobsActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.itemSocialShare) {
+            // Open share dialog
+            // Create intent
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+
+            // Set content type
+            sharingIntent.setType("text/plain");
+
+            // Set text and put to extras
+            String shareBody = "I've saved " + jobs.size() + " jobs using iFindAJob Android!";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share Saved Job");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+            startActivity(Intent.createChooser(sharingIntent, "Share Via..")); // Social type chooser
+        }
+
+        if (item.getItemId() == R.id.itemPreferences) {
+            // Open preferences activity
+            activityToSwitchTo = new Intent(getBaseContext(), PreferencesActivity.class);
             startActivity(activityToSwitchTo);
             return true;
         }

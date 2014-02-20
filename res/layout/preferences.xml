@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@drawable/activity_background">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView android:layout_width="0dp"
+                  android:layout_height="40dp"
+                  android:layout_weight="3"
+                  android:layout_marginLeft="4px"
+                  android:gravity="center_vertical"
+                  android:textColor="#926239"
+                  android:text="@string/preferences_skip_home" />
+        <ToggleButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textOn="Yes"
+            android:textOff="No"
+            android:layout_marginRight="4px"
+            android:gravity="center_vertical"
+            android:id="@+id/tgbSkipHome"/>
+    </LinearLayout>
+                  
+
+    
+</LinearLayout>

@@ -1,7 +1,7 @@
 // Author: Jordan Hancock
-// Name: MainActivity.java
+// Name: PreferencesActivity.java
 // Last Modified: 20/02/2014
-// Purpose: Activity which is used for main (home) activity page.
+// Purpose: Allows user to manage app preferences
 package uk.ac.bcu;
 
 import android.app.Activity;
@@ -11,9 +11,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import uk.ac.db.DatabaseManager;
+import android.view.View;
+import android.widget.ToggleButton;
 
-public class MainActivity extends Activity {
+public class PreferencesActivity extends Activity {
+
+    private ToggleButton tgbSkipHome;
 
     /**
      * Called when the activity is first created.
@@ -22,23 +25,32 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         // Set up super
         super.onCreate(savedInstanceState);
-        super.setTitle("iFindAJob");
-        DatabaseManager.init(this);
 
         // Set up interface
-        setContentView(R.layout.main);
-        this.setTitle("Home");
-        
-        // Set whether to skip MainActivity
+        setContentView(R.layout.preferences);
+        this.setTitle("Preferences");
+
         // Get shared preferences
         final SharedPreferences sharedPreferences = this.getSharedPreferences(
                 "uk.ac.bcu", Context.MODE_PRIVATE);
-        // If true, skip to LocationSearchActivity
+        
+        // Set up controls
+        tgbSkipHome = (ToggleButton) findViewById(R.id.tgbSkipHome);
         boolean skipHome = false;
-        if(sharedPreferences.getBoolean("skipHome", skipHome)) {
-            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-        }
+        skipHome = sharedPreferences.getBoolean("skipHome", skipHome);
+        tgbSkipHome.setChecked(skipHome);
+
+        // Button click code
+        // Set shared preferences when button clicked
+        tgbSkipHome.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (tgbSkipHome.isChecked()) {
+                    sharedPreferences.edit().putBoolean("skipHome", true).commit();
+                } else {
+                    sharedPreferences.edit().putBoolean("skipHome", false).commit();
+                }
+            }
+        });
     }
 
     // When Menu button clicked
@@ -74,24 +86,24 @@ public class MainActivity extends Activity {
             startActivity(activityToSwitchTo);
             return true;
         }
-        
+
         if (item.getItemId() == R.id.itemSocialShare) {
             // Open share dialog
             // Create intent
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            
+
             // Set content type
             sharingIntent.setType("text/plain");
-            
+
             // Set text and put to extras
             String shareBody = "Live somewhere on Planet Earth? Looking for a job in I.T.? "
                     + "You should download iFindAJob from the Android PlayStore!";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share App");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            
+
             startActivity(Intent.createChooser(sharingIntent, "Share Via..")); // Social type chooser
         }
-        
+
         if (item.getItemId() == R.id.itemPreferences) {
             // Open preferences activity
             activityToSwitchTo = new Intent(getBaseContext(), PreferencesActivity.class);

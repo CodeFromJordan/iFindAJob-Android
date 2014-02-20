@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SearchableActivity.java
-// Last Modified: 16/02/2014
+// Last Modified: 20/02/2014
 // Purpose: Activity which is used for controlling search bar for Location search.
 package uk.ac.bcu;
 

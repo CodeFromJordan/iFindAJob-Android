@@ -71,6 +71,11 @@
                   android:launchMode="singleTop"
                   android:label="@string/app_label">
         </activity>
+        
+        <!-- Preferences activity -->
+        <activity android:name="PreferencesActivity"
+              android:launchMode="singleTop"
+              android:label="@string/app_label">
+        </activity>
     </application>
-    <!-- END APP -->
-</manifest> 
+</manifest>
