@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
+import uk.ac.availability.InternetConnection;
 import uk.ac.db.DatabaseManager;
 import uk.ac.model.Job;
 
@@ -107,7 +108,7 @@ public class SavedJobsActivity extends ListActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity) {
+        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
             // Set as Search activity
             activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
             startActivity(activityToSwitchTo);

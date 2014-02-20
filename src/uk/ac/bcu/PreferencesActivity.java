@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ToggleButton;
+import uk.ac.availability.InternetConnection;
 
 public class PreferencesActivity extends Activity {
 
@@ -73,7 +74,7 @@ public class PreferencesActivity extends Activity {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity) {
+       if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
             // Set as Search activity
             activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
             startActivity(activityToSwitchTo);

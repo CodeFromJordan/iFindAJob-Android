@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import uk.ac.availability.InternetConnection;
 import uk.ac.db.DatabaseManager;
 
 public class MainActivity extends Activity {
@@ -61,7 +62,7 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity) {
+        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
             // Set as Search activity
             activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
             startActivity(activityToSwitchTo);

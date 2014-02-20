@@ -15,6 +15,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
+import uk.ac.availability.InternetConnection;
 import uk.ac.bcu.services.AbstractService;
 import uk.ac.bcu.services.IServiceListener;
 import uk.ac.bcu.services.JobSearchService;
@@ -98,8 +99,11 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity) {
-            return false;
+        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
+            // Set as Search activity
+            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+            startActivity(activityToSwitchTo);
+            return true;
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {

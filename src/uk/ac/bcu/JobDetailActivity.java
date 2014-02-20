@@ -167,7 +167,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity) {
+        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
             // Set as Search activity
             activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
             startActivity(activityToSwitchTo);
