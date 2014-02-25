@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -99,11 +100,16 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
-            // Set as Search activity
-            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-            return true;
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            if (InternetConnection.hasInternetConnection(this)) {
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;
+            } else {
+                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {

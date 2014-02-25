@@ -78,4 +78,22 @@ public class DatabaseManager {
             ex.printStackTrace();
         }
     }
+    
+    // Delete location from database
+    public void deleteLocation(Location location) {
+        try {
+            getHelper().getLocationDao().delete(location);
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    // Delete job from database
+    public void deleteJob(Job job) {
+        try {
+            getHelper().getJobDao().delete(job);
+        } catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

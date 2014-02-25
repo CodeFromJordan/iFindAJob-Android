@@ -4,14 +4,19 @@
 // Purpose: Activity which is used for saved jobs activity page.
 package uk.ac.bcu;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import uk.ac.availability.InternetConnection;
@@ -38,7 +43,47 @@ public class SavedJobsActivity extends ListActivity {
         setContentView(R.layout.saved_jobs);
         this.setTitle("Saved Jobs");
 
+        // Set-up long click listener for ListView activity
+        ListView lv = getListView();
+        lv.setOnItemLongClickListener(new OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int row, long arg3) {
+                // Ask if user wants to delete with Dialog box
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(SavedJobsActivity.this);
+                alertDialog.setTitle("Delete Job");
+                alertDialog.setMessage("Do you want to delete the selected row?");
+
+                // User clicks Yes
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteJob(jobs.get(row));
+                        Toast.makeText(getApplicationContext(), "Job deleted.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // User clicks No
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.show();
+                return true;
+            }
+        });
+
         updateListView();
+    }
+
+    // Delete a job from the global arraylist
+    private void deleteJob(Job job) {
+        jobs.remove(job); // Delete job from list
+
+        // Delete job from database
+        DatabaseManager.getInstance().deleteJob(job);
+
+        setupListView(); // Refresh list view
     }
 
     // Reads Locations from database and populates cells
@@ -108,11 +153,16 @@ public class SavedJobsActivity extends ListActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
-            // Set as Search activity
-            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-            return true;
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            if (InternetConnection.hasInternetConnection(this)) {
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;
+            } else {
+                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {

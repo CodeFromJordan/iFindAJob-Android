@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import uk.ac.availability.InternetConnection;
 import uk.ac.db.DatabaseManager;
 
@@ -29,7 +30,7 @@ public class MainActivity extends Activity {
         // Set up interface
         setContentView(R.layout.main);
         this.setTitle("Home");
-        
+               
         // Set whether to skip MainActivity
         // Get shared preferences
         final SharedPreferences sharedPreferences = this.getSharedPreferences(
@@ -62,11 +63,19 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
-            // Set as Search activity
-            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-            return true;
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            if(InternetConnection.hasInternetConnection(this))
+            {
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                return false;
+            } 
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {

@@ -4,9 +4,11 @@
 // Purpose: Activity which is used for location search activity page.
 package uk.ac.bcu;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -14,8 +16,10 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONException;
@@ -67,6 +71,36 @@ public class LocationSearchActivity extends ListActivity {
         };
         registerReceiver(receiver, intentFilter); // Make the receiver usable
 
+        // Set-up long click listener for ListView activity
+        ListView lv = getListView();
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int row, long arg3) {
+                // Ask if user wants to delete with Dialog box
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(LocationSearchActivity.this);
+                alertDialog.setTitle("Delete Location");
+                alertDialog.setMessage("Do you want to delete the selected row?");
+
+                // User clicks Yes
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteLocation(locations.get(row));
+                        Toast.makeText(getApplicationContext(), "Location deleted.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                // User clicks No
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                alertDialog.show();
+                return true;
+            }
+        });
+
         updateListView(); // Refresh list view after adding new item
     }
 
@@ -107,6 +141,22 @@ public class LocationSearchActivity extends ListActivity {
         setupListView(); // Refresh list view
     }
 
+    // Save locations from global arraylist to JSON file
+    public void saveLocation(Location location) {
+        // Add new Location to database
+        DatabaseManager.getInstance().addNewLocation(location);
+    }
+
+    // Delete a location from the global arraylist
+    private void deleteLocation(Location location) {
+        locations.remove(location); // Delete location from list
+
+        // Delete location from database
+        DatabaseManager.getInstance().deleteLocation(location);
+
+        setupListView(); // Refresh list view
+    }
+
     private void updateListView() {
         // Set up list
         if (locationsText.size() > 0) {
@@ -115,12 +165,6 @@ public class LocationSearchActivity extends ListActivity {
                     R.id.text,
                     locationsText));
         }
-    }
-
-    // Save locations from global arraylist to JSON file
-    public void saveLocation(Location location) {
-        // Add new Location to database
-        DatabaseManager.getInstance().addNewLocation(location);
     }
 
     @Override

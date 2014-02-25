@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import uk.ac.availability.InternetConnection;
 
@@ -34,7 +35,7 @@ public class PreferencesActivity extends Activity {
         // Get shared preferences
         final SharedPreferences sharedPreferences = this.getSharedPreferences(
                 "uk.ac.bcu", Context.MODE_PRIVATE);
-        
+
         // Set up controls
         tgbSkipHome = (ToggleButton) findViewById(R.id.tgbSkipHome);
         boolean skipHome = false;
@@ -74,11 +75,16 @@ public class PreferencesActivity extends Activity {
             return true;
         }
 
-       if (item.getItemId() == R.id.itemSearchActivity && InternetConnection.hasInternetConnection(this)) {
-            // Set as Search activity
-            activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-            return true;
+        if (item.getItemId() == R.id.itemSearchActivity) {
+            if (InternetConnection.hasInternetConnection(this)) {
+                // Set as Search activity
+                activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+                startActivity(activityToSwitchTo);
+                return true;
+            } else {
+                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {
