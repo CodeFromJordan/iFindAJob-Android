@@ -56,7 +56,7 @@ public class SavedJobsActivity extends ListActivity {
                 // User clicks Yes
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteJob(jobs.get(row));
+                        deleteJob(jobs.get(row), row);
                         Toast.makeText(getApplicationContext(), "Job deleted.", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -77,8 +77,9 @@ public class SavedJobsActivity extends ListActivity {
     }
 
     // Delete a job from the global arraylist
-    private void deleteJob(Job job) {
+    private void deleteJob(Job job, int row) {
         jobs.remove(job); // Delete job from list
+        jobsText.remove(row); // Delete job text from list
 
         // Delete job from database
         DatabaseManager.getInstance().deleteJob(job);
@@ -133,12 +134,14 @@ public class SavedJobsActivity extends ListActivity {
 
     private void updateListView() {
         // Set up list
-        if (jobsText.size() > 0) {
-            setListAdapter(new ArrayAdapter<String>(this,
-                    R.layout.list_cell,
-                    R.id.text,
-                    jobsText));
+        if (jobsText.size() < 1) {
+            jobsText.add(("There are no jobs to show.."));
         }
+
+        setListAdapter(new ArrayAdapter<String>(this,
+                R.layout.list_cell,
+                R.id.text,
+                jobsText));
     }
 
     // When item in menu selected

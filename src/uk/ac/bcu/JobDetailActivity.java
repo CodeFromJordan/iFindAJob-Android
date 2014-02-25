@@ -65,6 +65,9 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         txtJobDescription = (TextView) findViewById(R.id.txtJobDescriptionDetails);
         btnViewInBrowser = (Button) findViewById(R.id.btnViewInBrowser);
         btnSaveJob = (Button) findViewById(R.id.btnSaveJob);
+        
+        // Set placeholder map
+        imgJobMap.setImageDrawable((getResources().getDrawable(R.drawable.mapplaceholder)));
 
         // Button click code
         // View job details on AuthenticJobs webpage

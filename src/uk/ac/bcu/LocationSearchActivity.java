@@ -84,7 +84,7 @@ public class LocationSearchActivity extends ListActivity {
                 // User clicks Yes
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteLocation(locations.get(row));
+                        deleteLocation(locations.get(row), row);
                         Toast.makeText(getApplicationContext(), "Location deleted.", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -148,8 +148,9 @@ public class LocationSearchActivity extends ListActivity {
     }
 
     // Delete a location from the global arraylist
-    private void deleteLocation(Location location) {
+    private void deleteLocation(Location location, int row) {
         locations.remove(location); // Delete location from list
+        locationsText.remove(row); // Delete location text from list
 
         // Delete location from database
         DatabaseManager.getInstance().deleteLocation(location);
@@ -159,12 +160,14 @@ public class LocationSearchActivity extends ListActivity {
 
     private void updateListView() {
         // Set up list
-        if (locationsText.size() > 0) {
-            setListAdapter(new ArrayAdapter<String>(this,
-                    R.layout.list_cell,
-                    R.id.text,
-                    locationsText));
+        if (locationsText.size() < 1) {
+            locationsText.add(("There are no locations to show.."));
         }
+
+        setListAdapter(new ArrayAdapter<String>(this,
+                R.layout.list_cell,
+                R.id.text,
+                locationsText));
     }
 
     @Override
