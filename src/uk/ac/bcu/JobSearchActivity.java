@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import java.util.ArrayList;
 import org.json.JSONException;
@@ -26,6 +27,8 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
     private Thread thread;
     private ArrayList<JSONObject> jobs;
 
+    private ProgressBar prgSearchSpinner;
+
     /**
      * Called when the activity is first created.
      */
@@ -39,8 +42,12 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
         this.setTitle("Job Results"); // Title
         jobs = new ArrayList<JSONObject>();
 
+        // Set up controls
+        prgSearchSpinner = (ProgressBar) findViewById(R.id.prgSearchSpinner);
+
         Intent intent = getIntent();
         String jsonString = intent.getExtras().getString("location");
+        prgSearchSpinner.setVisibility(View.VISIBLE); // Visible spinner
         doSearch(intent.getExtras().getString("location_query"),
                 intent.getExtras().getString("location_id")); // Start search with id and query
     }
@@ -187,5 +194,7 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
                     R.id.text,
                     result));
         }
+        
+        prgSearchSpinner.setVisibility(View.GONE); // Hide spinner
     }
 }

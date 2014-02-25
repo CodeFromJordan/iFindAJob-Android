@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,17 +26,28 @@ public class SearchableActivity extends ListActivity implements IServiceListener
     private String originalQuery;
     private ArrayList<JSONObject> searchResults;
     public static final String LOCATION_SEARCH_CLICKED = "location_result_selected";
+    
+    private ProgressBar prgSearchSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Set up super
         super.onCreate(savedInstanceState);
+        
+        // Set up interface
         setContentView(R.layout.search);
         this.setTitle("Find jobs in..");
+        
+        // Set up controls
+        prgSearchSpinner = (ProgressBar)findViewById(R.id.prgSearchSpinner);
+        
+        // Initialize list
         searchResults = new ArrayList<JSONObject>();
 
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            prgSearchSpinner.setVisibility(View.VISIBLE); // Visible spinner
             String query = intent.getStringExtra(SearchManager.QUERY);
             doSearch(query);
         }
@@ -107,5 +119,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
                     R.id.text,
                     result));
         }
+        
+        prgSearchSpinner.setVisibility(View.GONE); // Hide spinner
     }
 }

@@ -7,7 +7,20 @@
 >
     <ListView  
         android:layout_width="fill_parent" 
-        android:layout_height="fill_parent" 
+        android:layout_height="wrap_content" 
         android:id="@android:id/list"
     />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center">
+        
+        <ProgressBar
+            android:id="@+id/prgSearchSpinner"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:visibility="gone"
+        />
+    </RelativeLayout>
 </LinearLayout>

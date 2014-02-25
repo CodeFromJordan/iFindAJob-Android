@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 import uk.ac.availability.InternetConnection;
@@ -81,6 +82,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         btnSaveJob.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 saveJob();
+                Toast.makeText(getApplicationContext(), "Job saved.", Toast.LENGTH_SHORT).show();
             }
         });
 

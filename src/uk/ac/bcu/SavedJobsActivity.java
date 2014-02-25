@@ -51,7 +51,7 @@ public class SavedJobsActivity extends ListActivity {
                 // Ask if user wants to delete with Dialog box
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(SavedJobsActivity.this);
                 alertDialog.setTitle("Delete Job");
-                alertDialog.setMessage("Do you want to delete the selected row?");
+                alertDialog.setMessage("Do you want to delete the selected job?");
 
                 // User clicks Yes
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -184,7 +184,7 @@ public class SavedJobsActivity extends ListActivity {
             sharingIntent.setType("text/plain");
 
             // Set text and put to extras
-            String shareBody = "I've saved " + jobs.size() + " jobs using iFindAJob Android!";
+            String shareBody = "I've saved " + jobs.size() + " job(s) using iFindAJob Android!";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share Saved Job");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 

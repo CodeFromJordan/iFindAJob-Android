@@ -79,7 +79,7 @@ public class LocationSearchActivity extends ListActivity {
                 // Ask if user wants to delete with Dialog box
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(LocationSearchActivity.this);
                 alertDialog.setTitle("Delete Location");
-                alertDialog.setMessage("Do you want to delete the selected row?");
+                alertDialog.setMessage("Do you want to delete the selected location?");
 
                 // User clicks Yes
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
