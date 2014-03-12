@@ -5,6 +5,8 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -66,7 +68,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         txtJobDescription = (TextView) findViewById(R.id.txtJobDescriptionDetails);
         btnViewInBrowser = (Button) findViewById(R.id.btnViewInBrowser);
         btnSaveJob = (Button) findViewById(R.id.btnSaveJob);
-        
+
         // Set placeholder map
         imgJobMap.setImageDrawable((getResources().getDrawable(R.drawable.mapplaceholder)));
 
@@ -185,7 +187,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
             startActivity(activityToSwitchTo);
             return true;
         }
-        
+
         if (item.getItemId() == R.id.itemSocialShare) {
             // Open share dialog
             // Create intent
@@ -195,8 +197,8 @@ public class JobDetailActivity extends Activity implements IServiceListener {
             sharingIntent.setType("text/plain");
 
             // Set text and put to extras
-            String shareBody = "iFindAJob Android: Want to be an '" + job.getTitle() + "'?" +
-                    " Check out: " + job.getURL();
+            String shareBody = "iFindAJob Android: Want to be an '" + job.getTitle() + "'?"
+                    + " Check out: " + job.getURL();
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share Job");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 

@@ -23,6 +23,7 @@
         <receiver android:name=".WidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="uk.ac.bcu.DATA_CHANGED" />
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/appwidget_providerinfo" />
