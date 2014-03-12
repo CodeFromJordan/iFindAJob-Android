@@ -5,13 +5,14 @@
     
     <scale
         android:duration="777"
-        android:fromXScale="3"
-        android:fromYScale="3"
+        android:fromXScale="2"
+        android:fromYScale="2"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="1"
         android:toYScale="1" />
     
+    <!--
     <rotate
         android:duration="777"
         android:fromDegrees="90"
@@ -19,4 +20,5 @@
         android:toYScale="0.0"
         android:pivotX="50%"
         android:pivotY="50%" />
+        -->
 </set>

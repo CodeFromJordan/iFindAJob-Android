@@ -33,7 +33,7 @@ public class MapDownloadService extends AbstractService {
                 //+ "&zoom=14&size=150x100&sensor=false";
         String urlString = "http://maps.googleapis.com/maps/api/staticmap?center="
                 + latitude + "," + longitude
-                + "&zoom=14&size=150x100&sensor=false";
+                + "&zoom=14&size=300x200&sensor=false";
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(urlString);
 
