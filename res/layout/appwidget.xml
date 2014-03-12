@@ -2,16 +2,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
-             android:padding="@dimen/widget_margin">
+             android:padding="@dimen/widget_margin"
+             android:orientation="vertical">
     
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/activity_background">
-        <!-- Widget title -->
 
-              
+        <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/button_background_default">
+                    
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20sp"
+            android:gravity="center"
+            android:text="@string/widget_title"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp" />
+        </LinearLayout>
+                  
         <!-- Widget data -->
         <ListView  
             android:layout_width="fill_parent" 

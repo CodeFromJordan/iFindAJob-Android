@@ -28,29 +28,32 @@ public class MapDownloadService extends AbstractService {
     // Main service, use HttpClient to download bytes and convert to BitmapImage
     public void run() {
         // uses latitude and longitude for Google maps static image
-        String urlString = "http://maps.googleapis.com/maps/api/staticmap?center=" + 
-                latitude + "," + longitude + 
-                "&zoom=14&size=150x100&sensor=false";
+        //String urlString = "http://maps.googleapis.com/maps/api/staticmap?center="
+                //+ latitude + "," + longitude
+                //+ "&zoom=14&size=150x100&sensor=false";
+        String urlString = "http://maps.googleapis.com/maps/api/staticmap?center="
+                + latitude + "," + longitude
+                + "&zoom=14&size=150x100&sensor=false";
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(urlString);
-        
+
         InputStream in = null;
-        
+
         boolean error;
-        
+
         // Convert returned data to BitMap
         try {
             in = client.execute(request).getEntity().getContent();
             imgMap = BitmapFactory.decodeStream(in);
             in.close();
             error = false;
-        } catch (IOException ex) { 
+        } catch (IOException ex) {
             error = true;
         }
-        
+
         super.serviceComplete(error);
     }
-    
+
     public Bitmap getMap() {
         return this.imgMap;
     }

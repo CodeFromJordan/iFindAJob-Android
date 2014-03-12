@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,6 +35,8 @@ public class JobDetailActivity extends Activity implements IServiceListener {
 
     // Declare interface controls
     private ImageView imgJobMap;
+    private Animation imgJobMapAnimation;
+    private boolean imgJobMapFullscreen = false;
     private TextView txtJobTitle;
     private TextView txtJobCompanyName;
     private TextView txtJobCity;
@@ -70,7 +74,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         // Set placeholder map
         imgJobMap.setImageDrawable((getResources().getDrawable(R.drawable.mapplaceholder)));
 
-        // Button click code
+        // View click code
         // View job details on AuthenticJobs webpage
         btnViewInBrowser.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -83,6 +87,24 @@ public class JobDetailActivity extends Activity implements IServiceListener {
             public void onClick(View v) {
                 saveJob();
                 Toast.makeText(getApplicationContext(), "Job saved.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Stretch image
+        imgJobMap.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+
+                // Set map animation
+                if (imgJobMapFullscreen == true) { // If already fullscreen
+                    // Set to fill animation
+                    imgJobMapAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_shrink);
+                } else { // If not fullscreen
+                    // Set to shrink animation
+                    imgJobMapAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.map_fill);
+                }
+
+                imgJobMapFullscreen = !imgJobMapFullscreen; // Flip fullscreen state boolean
+                imgJobMap.startAnimation(imgJobMapAnimation); // Play animation
             }
         });
 
@@ -150,7 +172,7 @@ public class JobDetailActivity extends Activity implements IServiceListener {
     private void saveJob() {
         // Add new Job to database
         DatabaseManager.getInstance().addNewJob(job);
-        
+
         // Refresh widget on Saved Job addition
         Intent updateWidget = new Intent();
         updateWidget.setAction(WidgetProvider.DATA_CHANGED);
