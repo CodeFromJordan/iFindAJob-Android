@@ -6,7 +6,6 @@ package uk.ac.bcu;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -84,6 +83,11 @@ public class SavedJobsActivity extends ListActivity {
 
         // Delete job from database
         DatabaseManager.getInstance().deleteJob(job);
+        
+        // Refresh widget on Saved Job delete
+        Intent updateWidget = new Intent();
+        updateWidget.setAction(WidgetProvider.DATA_CHANGED);
+        sendBroadcast(updateWidget);
         
         setupListView(); // Refresh list view
     }

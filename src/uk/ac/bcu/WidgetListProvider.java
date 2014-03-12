@@ -18,7 +18,6 @@ import uk.ac.model.Job;
 public class WidgetListProvider implements RemoteViewsFactory {
 
     private List<Job> jobs;
-    private List<String> jobsText;
     private Context context = null;
     private int appWidgetId;
 
@@ -34,20 +33,12 @@ public class WidgetListProvider implements RemoteViewsFactory {
     private void populateListItem() {
         // Read location objects from database
         jobs = DatabaseManager.getInstance().getAllJobs();
-        jobsText = new ArrayList<String>();
-
-        int numberOfJobs = jobs.size();
-
-        if (numberOfJobs > 5) { // If more than five jobs
-            // Add last five added to list
-            for (int i = numberOfJobs - 5; i < numberOfJobs; i++) {
-                jobsText.add(jobs.get(i).getTitle() + " - " + jobs.get(i).getCity());
-            }
-        } else { // If five or less jobs
-            // Add all of them
-            for (Job job : jobs) {
-                jobsText.add(job.getTitle() + " - " + job.getCity());
-            }
+        
+        int numberOfJobs = jobs.size(); // Get size of jobs list
+        
+        // Get last five items of jobs
+        while(jobs.size() > 5) { // While more than five items in jobs
+            jobs.remove(0); // Remove first item
         }
     }
 
@@ -62,7 +53,7 @@ public class WidgetListProvider implements RemoteViewsFactory {
 
         if (numberOfJobs >= 5) { // If five or more jobs saved
             return 5; // Just return count as five
-        } else { // If less than five jobs saved
+        } else { // If less than five jobs System.out.println("test");saved
             return numberOfJobs; // Return exact number of jobs
         }
     }
@@ -89,7 +80,7 @@ public class WidgetListProvider implements RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-
+        populateListItem();
     }
 
     @Override
@@ -119,13 +110,19 @@ public class WidgetListProvider implements RemoteViewsFactory {
         extras.putString("job_lon", jobs.get(position).getLongitude());
         extras.putBoolean("from_saved", true); // It's from saved job page
         
-        // Job details for each row get added to an intent
+        // Job details for each row get added to an intentjobs.get(position).getTitle() + " - " + jobs.get(position).
         Intent fillInIntent = new Intent();
         fillInIntent.putExtras(extras);
         
         // FillInIntent returned to WidgetProvider with extras to open JobDetailView
         remoteView.setOnClickFillInIntent(R.id.widget_text, fillInIntent);
-        remoteView.setTextViewText(R.id.widget_text, jobsText.get(position));
+        
+        // Get job details for cell
+        Job jobForRow = jobs.get(position);
+        String jobString = jobForRow.getTitle() + " - " + jobForRow.getCity();
+        
+        // Write text to cell
+        remoteView.setTextViewText(R.id.widget_text, jobString);
 
         return remoteView;
     }

@@ -5,8 +5,6 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -152,6 +150,11 @@ public class JobDetailActivity extends Activity implements IServiceListener {
     private void saveJob() {
         // Add new Job to database
         DatabaseManager.getInstance().addNewJob(job);
+        
+        // Refresh widget on Saved Job addition
+        Intent updateWidget = new Intent();
+        updateWidget.setAction(WidgetProvider.DATA_CHANGED);
+        sendBroadcast(updateWidget);
     }
 
     // When Menu button clicked

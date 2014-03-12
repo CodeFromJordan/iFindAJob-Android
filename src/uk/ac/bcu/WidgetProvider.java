@@ -7,6 +7,7 @@ package uk.ac.bcu;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +16,7 @@ import android.widget.RemoteViews;
 public class WidgetProvider extends AppWidgetProvider {
 
     public static final String DATA_CHANGED = "uk.ac.bcu.DATA_CHANGED";
-    
+
     // Called according to appwidget_providerinfo.xml
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -27,7 +28,7 @@ public class WidgetProvider extends AppWidgetProvider {
                     appWidgetIds[i]);
             appWidgetManager.updateAppWidget(appWidgetIds[i],
                     remoteViews);
-
+            
             // Intent for clickable list items within widget
             // Starts JobDetailActivity
             Intent startActivityIntent = new Intent(context, JobDetailActivity.class);
@@ -35,14 +36,16 @@ public class WidgetProvider extends AppWidgetProvider {
             // Pending intent gets extras from item clicked in list
             PendingIntent startActivityPendingIntent = PendingIntent.getActivity(context, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             remoteViews.setPendingIntentTemplate(R.id.listViewWidget, startActivityPendingIntent);
-
+            
             // Start pending intent
             appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
         }
+        
+            // Refresh list
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listViewWidget);
 
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
-   
 
     private RemoteViews updateWidgetListView(Context context,
             int appWidgetId) {
@@ -70,5 +73,19 @@ public class WidgetProvider extends AppWidgetProvider {
         remoteViews.setEmptyView(R.id.listViewWidget, R.id.empty_view);
 
         return remoteViews;
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if (DATA_CHANGED.equals(intent.getAction())) {
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            ComponentName thisAppWidget = new ComponentName(context.getPackageName(), WidgetProvider.class.getName());
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
+
+            onUpdate(context, appWidgetManager, appWidgetIds);
+        }
     }
 }
