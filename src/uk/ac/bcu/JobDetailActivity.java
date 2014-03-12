@@ -133,38 +133,44 @@ public class JobDetailActivity extends Activity implements IServiceListener {
         } catch (JSONException ex) {
         }
 
-        // Button visibility code
-        if (intent.getExtras().getBoolean("from_saved")) { // If from Saved Jobs page
-            btnSaveJob.setVisibility(View.INVISIBLE); // Hide button as it wont be needed
-        }
-
-        // Put data into text boxes
-        // Direct reads
-        txtJobTitle.setText(txtJobTitle.getText() + " " + job.getTitle());
-        txtJobCompanyName.setText(txtJobCompanyName.getText() + " " + job.getCompanyName());
-        txtJobCity.setText(txtJobCity.getText() + " " + job.getCity());
-        txtJobPostDate.setText(txtJobPostDate.getText() + " " + job.getDatePosted());
-        txtJobDescription.setText(Html.fromHtml(job.getDescription()));
-
-        // Translate from 1/0 to Yes/No
-        if (job.getHasRelocationSupport()) {
-            txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "Yes");
+        if (job.getID() == "bad_job") {
+            Toast.makeText(getApplicationContext(), "There was an error with the data returned for the job you chose.\n\n"
+                    + "Please choose another.", Toast.LENGTH_SHORT).show();
+            this.finish();
         } else {
-            txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "No");
-        }
+            // Button visibility code
+            if (intent.getExtras().getBoolean("from_saved")) { // If from Saved Jobs page
+                btnSaveJob.setVisibility(View.INVISIBLE); // Hide button as it wont be needed
+            }
 
-        if (job.getRequiresTelecommunication()) {
-            txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "Yes");
-        } else {
-            txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
-        }
+            // Put data into text boxes
+            // Direct reads
+            txtJobTitle.setText(txtJobTitle.getText() + " " + job.getTitle());
+            txtJobCompanyName.setText(txtJobCompanyName.getText() + " " + job.getCompanyName());
+            txtJobCity.setText(txtJobCity.getText() + " " + job.getCity());
+            txtJobPostDate.setText(txtJobPostDate.getText() + " " + job.getDatePosted());
+            txtJobDescription.setText(Html.fromHtml(job.getDescription()));
 
-        // Get image
-        if (InternetConnection.hasInternetConnection(this)) {
-            MapDownloadService mapDownloadService = new MapDownloadService(job.getLatitude(), job.getLongitude());
-            mapDownloadService.addListener(this);
-            imageThread = new Thread(mapDownloadService);
-            imageThread.start();
+            // Translate from 1/0 to Yes/No
+            if (job.getHasRelocationSupport()) {
+                txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "Yes");
+            } else {
+                txtJobHasRelocationAssistance.setText(txtJobHasRelocationAssistance.getText() + " " + "No");
+            }
+
+            if (job.getRequiresTelecommunication()) {
+                txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "Yes");
+            } else {
+                txtJobRequiresTelecommuting.setText(txtJobRequiresTelecommuting.getText() + " " + "No");
+            }
+
+            // Get image
+            if (InternetConnection.hasInternetConnection(this)) {
+                MapDownloadService mapDownloadService = new MapDownloadService(job.getLatitude(), job.getLongitude());
+                mapDownloadService.addListener(this);
+                imageThread = new Thread(mapDownloadService);
+                imageThread.start();
+            }
         }
     }
 

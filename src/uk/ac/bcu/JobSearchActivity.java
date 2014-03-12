@@ -74,10 +74,10 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (position < jobs.size()) {
-            Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
-            intent.putExtra("job", jobs.get(position).toString());
-            intent.putExtra("from_saved", false); // It's not from saved job page
-            startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), JobDetailActivity.class);
+                intent.putExtra("job", jobs.get(position).toString());
+                intent.putExtra("from_saved", false); // It's not from saved job page
+                startActivity(intent);
         }
     }
 
@@ -194,7 +194,7 @@ public class JobSearchActivity extends ListActivity implements IServiceListener 
                     R.id.text,
                     result));
         }
-        
+
         prgSearchSpinner.setVisibility(View.GONE); // Hide spinner
     }
 }

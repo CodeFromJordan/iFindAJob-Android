@@ -97,7 +97,9 @@ public class Job {
             } else {
                 this.requiresTelecommunitcation = false;
             }
-        } catch (JSONException ex) { }
+        } catch (JSONException ex) { 
+            this.id = "bad_job";
+        }
     }
     
     // Getters
