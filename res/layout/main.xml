@@ -21,7 +21,7 @@
         android:layout_marginLeft="5px"
         android:layout_marginRight="5px"
         android:textColor="#926239"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:gravity="fill"
         android:text="@string/app_intro1"
     />
@@ -32,7 +32,7 @@
         android:layout_marginLeft="5px"
         android:layout_marginRight="5px"
         android:textColor="#926239"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:gravity="fill"
         android:text="@string/app_intro2"
     />

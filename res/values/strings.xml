@@ -29,4 +29,8 @@
     
     <!-- Preferences page -->
     <string name="preferences_skip_home">Skip Homepage</string>
+    
+    <!-- Preferences page -->
+    <string name="widget_title">iFindAJob - Saved Jobs</string>
+    <string name="widget_empty">No jobs have been saved.</string>
 </resources>
