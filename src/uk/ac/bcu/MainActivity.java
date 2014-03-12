@@ -11,17 +11,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 import uk.ac.availability.InternetConnection;
 import uk.ac.db.DatabaseManager;
 
 public class MainActivity extends Activity {
 
-    /**
-     * Called when the activity is first created.
-     */
+    private ImageView imgLogo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        // Set whether to skip MainActivity
+        // Get shared preferences
+        final SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "uk.ac.bcu", Context.MODE_PRIVATE);
+        // If true, skip to LocationSearchActivity
+        boolean skipHome = false;
+        if (sharedPreferences.getBoolean("skipHome", skipHome)) {
+            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+            startActivity(activityToSwitchTo);
+        }
+        
         // Set up super
         super.onCreate(savedInstanceState);
         super.setTitle("iFindAJob");
@@ -30,17 +42,10 @@ public class MainActivity extends Activity {
         // Set up interface
         setContentView(R.layout.main);
         this.setTitle("Home");
-               
-        // Set whether to skip MainActivity
-        // Get shared preferences
-        final SharedPreferences sharedPreferences = this.getSharedPreferences(
-                "uk.ac.bcu", Context.MODE_PRIVATE);
-        // If true, skip to LocationSearchActivity
-        boolean skipHome = false;
-        if(sharedPreferences.getBoolean("skipHome", skipHome)) {
-            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-        }
+
+        // Set up controls
+        imgLogo = (ImageView)findViewById(R.id.main_logo);
+        imgLogo.setImageDrawable((getResources().getDrawable(R.drawable.icon)));
     }
 
     // When Menu button clicked
@@ -64,18 +69,15 @@ public class MainActivity extends Activity {
         }
 
         if (item.getItemId() == R.id.itemSearchActivity) {
-            if(InternetConnection.hasInternetConnection(this))
-            {
+            if (InternetConnection.hasInternetConnection(this)) {
                 // Set as Search activity
                 activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
                 startActivity(activityToSwitchTo);
                 return true;
-            }
-            else
-            {
+            } else {
                 Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
                 return false;
-            } 
+            }
         }
 
         if (item.getItemId() == R.id.itemSavedJobsActivity) {
@@ -84,24 +86,24 @@ public class MainActivity extends Activity {
             startActivity(activityToSwitchTo);
             return true;
         }
-        
+
         if (item.getItemId() == R.id.itemSocialShare) {
             // Open share dialog
             // Create intent
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            
+
             // Set content type
             sharingIntent.setType("text/plain");
-            
+
             // Set text and put to extras
             String shareBody = "Live somewhere on Planet Earth? Looking for a job in I.T.? "
                     + "You should download iFindAJob from the Android PlayStore!";
             sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share App");
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            
+
             startActivity(Intent.createChooser(sharingIntent, "Share Via..")); // Social type chooser
         }
-        
+
         if (item.getItemId() == R.id.itemPreferences) {
             // Open preferences activity
             activityToSwitchTo = new Intent(getBaseContext(), PreferencesActivity.class);

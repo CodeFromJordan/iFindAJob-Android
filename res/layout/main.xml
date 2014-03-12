@@ -4,16 +4,24 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/activity_background"
->
+              android:gravity="center_horizontal">
+       
+    <ImageView android:id="@+id/main_logo"
+                   android:layout_width="150dp"
+                   android:layout_height="150dp"
+                   android:gravity="center_horizontal"
+                   android:paddingTop="40dp"
+                   android:contentDescription="@string/details_job_map" />
+    
     <TextView 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:textColor="#49311c"
+        android:textColor="#926239"
         android:textSize="40sp"
         android:gravity="center_horizontal"
-        android:text="@string/app_name"
+        android:text="@string/app_main_header"
     />
-
+    
     <TextView 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
@@ -22,10 +30,10 @@
         android:layout_marginRight="5px"
         android:textColor="#926239"
         android:textSize="13sp"
-        android:gravity="fill"
+        android:gravity="center_horizontal"
         android:text="@string/app_intro1"
     />
-
+    
     <TextView 
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
@@ -33,7 +41,7 @@
         android:layout_marginRight="5px"
         android:textColor="#926239"
         android:textSize="13sp"
-        android:gravity="fill"
+        android:gravity="center_horizontal"
         android:text="@string/app_intro2"
     />
 </LinearLayout>

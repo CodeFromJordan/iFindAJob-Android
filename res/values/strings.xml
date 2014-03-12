@@ -3,13 +3,14 @@
     <!-- Shared -->
     <string name="app_name">iFindAJob</string>
     <string name="app_label">iFindAJob</string>
+    <string name="app_main_header">\n- iFindAJob -</string>
     
     <!-- Homepage -->
-    <string name="app_intro1">Hello, and welcome to the iFindAJob Android application.
-    Please press Menu and click the \'Find Jobs\' tab at the bottom of the window to
-    begin searching for I.T. jobs around the globe.</string>
-    <string name="app_intro2">If the Android app has helped you, please use
-    the \'Share App\' button at the top right to spread the word!</string>
+    <string name="app_intro1">-------
+    </string>
+    <string name="app_intro2">To get searching, press your Menu button and choose the \'Find Jobs\' option to
+    begin searching for I.T. jobs around the globe.\n\nIf the Android app has helped you, please use
+    the \'Share App\' button in the menu to spread the word!</string>
     
     <!-- Search page -->
     <string name="search_button_text">Look for Jobs</string>

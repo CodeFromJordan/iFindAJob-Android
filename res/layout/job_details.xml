@@ -23,57 +23,58 @@
                        android:contentDescription="@string/details_job_map"
                        android:background="#ffffff" />
         </LinearLayout> 
-        
+         
         <!-- Leftmost job details-->
         <LinearLayout android:orientation="vertical"
-                      android:layout_width="0pt" 
-                      android:layout_height="wrap_content" 
-                      android:layout_weight="1"
-                      android:layout_margin="2px"
-                      android:background="#77FFFFFF">
+                          android:layout_width="0pt" 
+                          android:layout_height="wrap_content" 
+                          android:layout_weight="1"
+                          android:layout_margin="2px"
+                          android:background="#77FFFFFF">
             <!-- Job title -->
             <TextView android:id="@+id/txtJobTitle" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="wrap_content"
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_title"
-                      android:textColor="#926239"/>
+                          android:layout_width="fill_parent" 
+                          android:layout_height="wrap_content"
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_title"
+                          android:textColor="#926239"/>
             <!-- Job company name -->
             <TextView android:id="@+id/txtJobCompanyName" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="15dp" 
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_company_name"
-                      android:textColor="#926239" />
+                          android:layout_width="fill_parent" 
+                          android:layout_height="wrap_content" 
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_company_name"
+                          android:textColor="#926239" />
             <!-- Job city -->
             <TextView android:id="@+id/txtJobCity" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="15dp" 
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_city"
-                      android:textColor="#926239" />
+                          android:layout_width="fill_parent" 
+                          android:layout_height="wrap_content" 
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_city"
+                          android:textColor="#926239" />
             <!-- Post date -->
             <TextView android:id="@+id/txtJobPostDate" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="15dp" 
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_post_date"
-                      android:textColor="#926239" />
+                          android:layout_width="fill_parent" 
+                          android:layout_height="15dp" 
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_post_date"
+                          android:textColor="#926239" />
             <!-- Has relocation assistance -->
             <TextView android:id="@+id/txtJobHasRelocationAssistance" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="15dp" 
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_has_relocation_assistance"
-                      android:textColor="#926239" />
+                          android:layout_width="fill_parent" 
+                          android:layout_height="15dp" 
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_has_relocation_assistance"
+                          android:textColor="#926239" />
             <!-- Requires telecommuting -->
             <TextView android:id="@+id/txtJobRequiresTelecommuting" 
-                      android:layout_width="fill_parent" 
-                      android:layout_height="15dp" 
-                      android:textSize="10sp" 
-                      android:text="@string/details_job_requires_telecommuting"
-                      android:textColor="#926239" />
+                          android:layout_width="fill_parent" 
+                          android:layout_height="15dp" 
+                          android:textSize="10sp" 
+                          android:text="@string/details_job_requires_telecommuting"
+                          android:textColor="#926239" />
         </LinearLayout>
+        
     </LinearLayout>  
         
     <!-- Bottom details -->
