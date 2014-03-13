@@ -10,6 +10,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
+    <uses-sdk android:minSdkVersion="8"
+    android:targetSdkVersion="18"/>
+    
     <!-- BEGIN APP -->
     <application android:label="@string/app_name"
                  android:allowBackup="true"
@@ -20,7 +23,8 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- App Widget -->
-        <receiver android:name=".WidgetProvider">
+        <receiver android:name=".WidgetProvider"
+        android:enabled="@bool/is_honeycomb"> <!-- Widget available on SDK 11 (Android 3.0) or greater -->
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="uk.ac.bcu.DATA_CHANGED" />
