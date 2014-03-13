@@ -101,6 +101,7 @@ public class LocationSearchActivity extends ListActivity {
             }
         });
 
+        onSearchRequested(); // Open search bar as soon as activity displayed
         updateListView(); // Refresh list view after adding new item
     }
 
