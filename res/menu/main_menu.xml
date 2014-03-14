@@ -10,8 +10,8 @@
           android:title="Saved Jobs" 
           android:icon="@android:drawable/ic_menu_agenda"/>
     <item android:id="@+id/itemSocialShare"
-          android:title="Share App" 
-          android:icon="@android:drawable/ic_menu_set_as"/>
+          android:title="Share" 
+          android:icon="@android:drawable/ic_menu_share"/>
     <item android:id="@+id/itemPreferences"
           android:title="Preferences" 
           android:icon="@android:drawable/ic_menu_preferences"/>

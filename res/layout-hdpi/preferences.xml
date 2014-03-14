@@ -4,33 +4,33 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/activity_background">
+                
     
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:background="@drawable/button_background_default">
-        <TextView 
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:layout_marginLeft="2sp"
-            android:textSize="23sp"
-            android:textColor="#FFFFFF"
-            android:text="@string/preferences_intro" />
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+                          android:background="@drawable/button_background_default">
+    <TextView 
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="2sp"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:text="@string/preferences_intro" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_margin="15sp"
         android:background="#77FFFFFF">
-        
         <TextView android:layout_width="0dp"
-                      android:layout_height="50dp"
-                      android:layout_weight="3"
-                      android:layout_marginLeft="4px"
-                      android:gravity="center_horizontal"
-                      android:textColor="#926239"
-                      android:text="@string/preferences_skip_home" />
+                  android:layout_height="50dp"
+                  android:layout_weight="3"
+                  android:textSize="20sp"
+                  android:gravity="center_vertical"
+                  android:textColor="#926239"
+                  android:text="@string/preferences_skip_home" />
         <ToggleButton
             android:layout_width="0dp"
             android:layout_height="50dp"
@@ -40,5 +40,5 @@
             android:layout_marginRight="4px"
             android:gravity="center_horizontal"
             android:id="@+id/tgbSkipHome"/>
-    </LinearLayout>
+    </LinearLayout>              
 </LinearLayout>

@@ -4,6 +4,7 @@
 // Purpose: Manages first part of search where locations are pulled from API.
 package uk.ac.bcu.services;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,7 +27,7 @@ public class LocationSearchService extends AbstractService {
 
     // Getters
     public String getQuery() {
-        return query;
+        return URLDecoder.decode(query);
     }
 
     public JSONArray getResults() {
