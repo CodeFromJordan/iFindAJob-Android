@@ -5,7 +5,9 @@
 package uk.ac.bcu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,18 +24,10 @@ public class MainActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-        // Set whether to skip MainActivity
         // Get shared preferences
-        final SharedPreferences sharedPreferences = this.getSharedPreferences(
-                "uk.ac.bcu", Context.MODE_PRIVATE);
-        // If true, skip to LocationSearchActivity
-        boolean skipHome = false;
-        if (sharedPreferences.getBoolean("skipHome", skipHome)) {
-            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
-        }
-        
+        firstRunSkipHomeActivity();
+        actuallySkipHomeActivity();
+
         // Set up super
         super.onCreate(savedInstanceState);
         super.setTitle("iFindAJob");
@@ -44,7 +38,7 @@ public class MainActivity extends Activity {
         this.setTitle("Home");
 
         // Set up controls
-        imgLogo = (ImageView)findViewById(R.id.main_logo);
+        imgLogo = (ImageView) findViewById(R.id.main_logo);
         imgLogo.setImageDrawable((getResources().getDrawable(R.drawable.icon)));
     }
 
@@ -112,5 +106,58 @@ public class MainActivity extends Activity {
         }
 
         return false;
+    }
+
+    private void firstRunSkipHomeActivity() {
+        // Get shared preferences
+        final SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "uk.ac.bcu", Context.MODE_PRIVATE);
+
+        // Set first run to True
+        boolean firstTimeAppRun = sharedPreferences.getBoolean("firstTime", true);
+
+        if (firstTimeAppRun) { // Only do this is app running for first time
+            
+            // Set firstTime to false
+            sharedPreferences.edit().putBoolean("firstTime", false).commit();
+            
+            // Ask if user wants to delete with Dialog box
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+            alertDialog.setTitle("Skip Home Activity?");
+            alertDialog.setMessage("Do you want to skip the Homescreen and jump straight to the "
+                    + "Search activity when the app is opened?\n\n"
+                    + "You can change this setting in the Preferences activity at any time.");
+
+            // User clicks Yes
+            alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    sharedPreferences.edit().putBoolean("skipHome", true).commit();
+                    Toast.makeText(getApplicationContext(), "Home activity will be skipped from now on.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // User clicks No
+            alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    sharedPreferences.edit().putBoolean("skipHome", false).commit();
+                    Toast.makeText(getApplicationContext(), "Home activity will be displayed when app is opened.", Toast.LENGTH_SHORT).show();
+                    dialog.cancel();
+                }
+            });
+
+            alertDialog.show();
+        }
+    }
+
+    private void actuallySkipHomeActivity() {
+        // Get shared preferences
+        final SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "uk.ac.bcu", Context.MODE_PRIVATE);
+        // If true, skip to LocationSearchActivity
+        boolean skipHome = false;
+        if (sharedPreferences.getBoolean("skipHome", skipHome)) {
+            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+            startActivity(activityToSwitchTo);
+        }
     }
 }
