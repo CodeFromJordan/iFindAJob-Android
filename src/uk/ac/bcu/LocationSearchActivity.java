@@ -193,6 +193,7 @@ public class LocationSearchActivity extends ListActivity {
         if (item.getItemId() == R.id.itemHomeActivity) {
             // Set as Main activity
             activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+            activityToSwitchTo.putExtra("mainActivityFirstOpen", false);
             startActivity(activityToSwitchTo);
             return true;
         }

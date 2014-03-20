@@ -24,9 +24,15 @@ public class MainActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // Get shared preferences
-        firstRunSkipHomeActivity();
-        actuallySkipHomeActivity();
+        // Get whether MainActivity was opened fresh from launcher of from Menu item click
+        Intent intent = this.getIntent();
+        boolean mainActivityFirstOpen = intent.getBooleanExtra("mainActivityFirstOpen", true);
+        
+        // If app was opened fresh from launcher, 
+        if (mainActivityFirstOpen) {
+            firstRunSkipHomeActivity(); // If app first run, show user prompt
+            actuallySkipHomeActivity(); // If user wants to skip Main activity, do so
+        }
 
         // Set up super
         super.onCreate(savedInstanceState);
@@ -58,6 +64,7 @@ public class MainActivity extends Activity {
         if (item.getItemId() == R.id.itemHomeActivity) {
             // Set as Main activity
             activityToSwitchTo = new Intent(getBaseContext(), MainActivity.class);
+            activityToSwitchTo.putExtra("mainActivityFirstOpen", false);
             startActivity(activityToSwitchTo);
             return true;
         }
