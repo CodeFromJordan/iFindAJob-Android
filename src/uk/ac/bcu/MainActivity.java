@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: MainActivity.java
-// Last Modified: 20/02/2014
+// Last Modified: 20/03/2014
 // Purpose: Activity which is used for main (home) activity page.
 package uk.ac.bcu;
 
@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
                 startActivity(activityToSwitchTo);
                 return true;
             } else {
-                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Can't go to Search activity as it requires an internet connection.", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
@@ -117,10 +117,10 @@ public class MainActivity extends Activity {
         boolean firstTimeAppRun = sharedPreferences.getBoolean("firstTime", true);
 
         if (firstTimeAppRun) { // Only do this is app running for first time
-            
+
             // Set firstTime to false
             sharedPreferences.edit().putBoolean("firstTime", false).commit();
-            
+
             // Ask if user wants to delete with Dialog box
             AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
             alertDialog.setTitle("Skip Home Activity?");
@@ -156,8 +156,12 @@ public class MainActivity extends Activity {
         // If true, skip to LocationSearchActivity
         boolean skipHome = false;
         if (sharedPreferences.getBoolean("skipHome", skipHome)) {
-            Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
-            startActivity(activityToSwitchTo);
+            if (InternetConnection.hasInternetConnection(this)) {
+                Intent activityToSwitchTo = new Intent(getBaseContext(), LocationSearchActivity.class);
+                startActivity(activityToSwitchTo);
+            } else {
+                Toast.makeText(getApplicationContext(), "Can't skip to Search activity as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

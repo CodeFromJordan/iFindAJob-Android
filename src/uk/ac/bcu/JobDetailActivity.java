@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: JobDetailActivity.java
-// Last Modified: 20/02/2014
+// Last Modified: 20/03/2014
 // Purpose: Activity which is used for individual job detail display.
 package uk.ac.bcu;
 

@@ -82,7 +82,7 @@ public class PreferencesActivity extends Activity {
                 startActivity(activityToSwitchTo);
                 return true;
             } else {
-                Toast.makeText(getApplicationContext(), "Can't go to this page as it requires an internet connection.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Can't go to Search activity as it requires an internet connection.", Toast.LENGTH_SHORT).show();
                 return false;
             }
         }
