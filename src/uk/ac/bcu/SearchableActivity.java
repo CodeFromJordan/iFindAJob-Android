@@ -1,6 +1,6 @@
 // Author: Jordan Hancock
 // Name: SearchableActivity.java
-// Last Modified: 20/02/2014
+// Last Modified: 20/03/2014
 // Purpose: Activity which is used for controlling search bar for Location search.
 package uk.ac.bcu;
 
@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import uk.ac.bcu.services.AbstractService;
@@ -26,21 +27,21 @@ public class SearchableActivity extends ListActivity implements IServiceListener
     private String originalQuery;
     private ArrayList<JSONObject> searchResults;
     public static final String LOCATION_SEARCH_CLICKED = "location_result_selected";
-    
+
     private ProgressBar prgSearchSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // Set up super
         super.onCreate(savedInstanceState);
-        
+
         // Set up interface
         setContentView(R.layout.search);
         this.setTitle("Find jobs in..");
-        
+
         // Set up controls
-        prgSearchSpinner = (ProgressBar)findViewById(R.id.prgSearchSpinner);
-        
+        prgSearchSpinner = (ProgressBar) findViewById(R.id.prgSearchSpinner);
+
         // Initialize list
         searchResults = new ArrayList<JSONObject>();
 
@@ -89,7 +90,8 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             LocationSearchService locationService = (LocationSearchService) service;
             final int numberOfResults = locationService.getResults().length(); // Get number of results from search
 
-            Location[] result = new Location[numberOfResults];
+            ArrayList result = new ArrayList();
+            //Location[] result = new Location[numberOfResults];
 
             originalQuery = locationService.getQuery();
 
@@ -98,10 +100,16 @@ public class SearchableActivity extends ListActivity implements IServiceListener
             // For all results, create a Locaiton object using JSON constructor
             for (int i = 0; i < numberOfResults; i++) {
                 try {
-                    searchResults.add(locationService.getResults().getJSONObject(i));
-                    result[i] = new Location(locationService.getResults().getJSONObject(i), originalQuery);
+                    JSONObject locationToAdd = locationService.getResults().getJSONObject(i);
+                    // Filter out empty results (which are bad)
+                    if (locationToAdd.has("city")) {
+                        searchResults.add(locationService.getResults().getJSONObject(i));
+                        result.add(new Location(locationService.getResults().getJSONObject(i), originalQuery));
+                    } else {
+                        System.out.println("Bad result");
+                    }
                 } catch (JSONException ex) {
-                    result[i] = new Location("0", "Error", "There has been an error..");
+                    result.add(new Location("0", "Error", "There has been an error.."));
                 }
             }
 
@@ -119,7 +127,7 @@ public class SearchableActivity extends ListActivity implements IServiceListener
                     R.id.text,
                     result));
         }
-        
+
         prgSearchSpinner.setVisibility(View.GONE); // Hide spinner
     }
 }
