@@ -128,7 +128,7 @@ public class LocationSearchActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (position < locations.size()) {
             Intent intent = new Intent(getBaseContext(), JobSearchActivity.class);
-            intent.putExtra("location_id", locations.get(position).getID());
+            intent.putExtra("location_id", locations.get(position).getUsedID());
             intent.putExtra("location_query", locations.get(position).getQuery());
             startActivity(intent);
         }

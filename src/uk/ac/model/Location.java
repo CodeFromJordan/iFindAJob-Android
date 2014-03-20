@@ -13,14 +13,17 @@ import org.json.JSONObject;
 @DatabaseTable
 public class Location {
 
-    // Members and database field annotations
+    // Members and database field annotations  
     @DatabaseField(id = true)
-    private String id;
+    private String id; // jobid-query
+    
+    @DatabaseField(uniqueCombo = true)
+    private String usedId;
 
     @DatabaseField
     private String city;
     
-    @DatabaseField
+    @DatabaseField(uniqueCombo = true)
     private String query;
 
     // No argument constructor
@@ -30,7 +33,10 @@ public class Location {
     }
 
     public Location(String id, String city, String query) {
-        this.id = id;
+        // id + query database ID is required so that multiple
+        // search terms per location can be saved
+        this.id = id + "-" + query;
+        this.usedId = id;
         this.city = city;
         this.query = query;
     }
@@ -39,16 +45,20 @@ public class Location {
     // Used when reading in search results
     public Location(JSONObject location, String query) {
         try {
-            this.id = location.getString("id");
+            this.id = location.getString("id") + "-" + query;
+            this.usedId = location.getString("id");
             this.city = location.getString("city");
             this.query = query;
-        } catch (JSONException ex) {
-        }
+        } catch (JSONException ex) { }
     }
 
     // Getters
     public String getID() {
         return this.id;
+    }
+    
+    public String getUsedID() {
+        return this.usedId;
     }
 
     public String getCity() {

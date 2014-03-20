@@ -22,8 +22,9 @@ public class MainActivity extends Activity {
 
     private ImageView imgLogo;
 
+   
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {       
         // Get whether MainActivity was opened fresh from launcher of from Menu item click
         Intent intent = this.getIntent();
         boolean mainActivityFirstOpen = intent.getBooleanExtra("mainActivityFirstOpen", true);
